@@ -1,12 +1,12 @@
 {
-	"name": "@gov.au/pancake-svg",
-	"version": "1.2.0",
+	"name": "@gold.au/pancake-svg",
+	"version": "1.2.1",
 	"description": "A Pancake plugin to generate svg sprites and png fallbacks.",
 	"keywords": [
 		"npm",
 		"flat",
 		"peerDependencies",
-		"gov.au",
+		"gold.au",
 		"auds",
 		"Commonwealth of Australia",
 		"design guide",
@@ -45,8 +45,7 @@
 		"lib/*"
 	],
 	"dependencies": {
-		"@gov.au/pancake": "~1",
-
+		"@gold.au/pancake": "~1",
 		"babel-runtime": "6.26.0"
 	},
 	"devDependencies": {
@@ -60,17 +59,16 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/govau/pancake.git"
+		"url": "https://github.com/designsystemau/pancake.git"
 	},
-	"homepage": "https://github.com/govau/pancake",
+	"homepage": "https://github.com/designsystemau/pancake",
 	"bugs": {
-		"url": "https://github.com/govau/pancake/issues",
-		"email": "designsystem@digital.gov.au"
+		"url": "https://github.com/designsystemau/pancake/issues"
 	},
 	"author": {
-		"name": "Commonwealth of Australia, DTA",
-		"email": "designsystem@digital.gov.au",
-		"url": "https://www.dta.gov.au/"
+		"name": "Design System AU",
+		"email": "maintainers@designsystemau.org",
+		"url": "https://designsystemau.org/"
 	},
 	"contributors": [
 		{

@@ -1,11 +1,12 @@
 {
-	"name": "@gov.au/pancake",
+	"name": "@gold.au/pancake",
 	"version": "1.4.1",
 	"description": "Pancake is an utility to make working with npm modules for the frontend sweet and seamlessly.",
 	"keywords": [
 		"npm",
 		"flat",
 		"peerDependencies",
+		"gold.au",
 		"gov.au",
 		"auds",
 		"Commonwealth of Australia",
@@ -59,17 +60,16 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/govau/pancake.git"
+		"url": "https://github.com/designsystemau/pancake.git"
 	},
-	"homepage": "https://github.com/govau/pancake",
+	"homepage": "https://github.com/designsystemau/pancake",
 	"bugs": {
-		"url": "https://github.com/govau/pancake/issues",
-		"email": "designsystem@digital.gov.au"
+		"url": "https://github.com/designsystemau/pancake/issues"
 	},
 	"author": {
-		"name": "Commonwealth of Australia, DTA",
-		"email": "designsystem@digital.gov.au",
-		"url": "https://www.dta.gov.au/"
+		"name": "Design System AU",
+		"email": "maintainers@designsystemau.org",
+		"url": "https://designsystemau.org/"
 	},
 	"contributors": [
 		{

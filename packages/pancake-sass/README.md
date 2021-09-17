@@ -20,11 +20,11 @@ Pancake Sass plugin
 
 
 ```shell
-yarn add @gov.au/pancake
+yarn add @gold.au/pancake
 ```
 
 ```shell
-npm install @gov.au/pancake --save-dev
+npm install @gold.au/pancake --save-dev
 ```
 
 

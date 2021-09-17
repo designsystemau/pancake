@@ -23,7 +23,7 @@ const Fs = require( 'fs' );
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Module imports
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const { ExitHandler, CheckNPM, Size, Log, Style, Loading, ParseArgs, Settings, Cwd, Semver, GetModules, Spawning } = require( '@gov.au/pancake' );
+const { ExitHandler, CheckNPM, Size, Log, Style, Loading, ParseArgs, Settings, Cwd, Semver, GetModules, Spawning } = require( '@gold.au/pancake' );
 const { HighlightDiff, Headline } = require( './prettiness.js' );
 const { AddDeps } = require('./dependencies.js' );
 const { GetRemoteJson } = require( './json.js' );
@@ -108,7 +108,7 @@ module.exports.init = ( argv = process.argv ) => {
 			`    $ ${ Style.yellow(`pancake /Users/you/project/folder`) }\n\n` +
 			`  ${ Style.bold(`SETTINGS`) }        - Set global settings. Available settings are: ${ Style.yellow( Object.keys( SETTINGS ).join(', ') ) }.\n` +
 			`    $ ${ Style.yellow(`pancake --set npmOrg "@yourOrg @anotherOrg"`) }\n` +
-			`    $ ${ Style.yellow(`pancake --set ignorePlugins @gov.au/pancake-sass,@gov.au/pancake-svg`) }\n\n` +
+			`    $ ${ Style.yellow(`pancake --set ignorePlugins @gold.au/pancake-sass,@gold.au/pancake-svg`) }\n\n` +
 			`  ${ Style.bold(`ORG`) }             - Change the org scope of the pancake modules you like to use.\n` +
 			`    $ ${ Style.yellow(`pancake --org "@your.org @anotherOrg"`) }\n\n` +
 			`  ${ Style.bold(`JSON`) }            - Temporarily overwrite the address to the json file of all your pancake modules.\n` +

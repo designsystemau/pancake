@@ -43,7 +43,7 @@ Pancake
 
 ## v1.3.0
 
-- Multiple organisations can be used, for example `@gov.au @nsw.gov.au`
+- Multiple organisations can be used, for example `@gov.au @nsw.gov.au @gold.au`
 
 
 ## v1.2.5

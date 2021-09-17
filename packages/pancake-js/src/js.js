@@ -2,7 +2,7 @@
  *
  * Generate and compile JS
  *
- * @repo    - https://github.com/govau/pancake
+ * @repo    - https://github.com/designsystemau/pancake
  * @author  - Dominik Wilkowski
  * @license - https://raw.githubusercontent.com/govau/pancake/master/LICENSE (MIT)
  *
@@ -20,7 +20,7 @@ const Path = require( 'path' );
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Included modules
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const { Log, Style, ReadFile, WriteFile } = require( '@gov.au/pancake' );
+const { Log, Style, ReadFile, WriteFile } = require( '@gold.au/pancake' );
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
