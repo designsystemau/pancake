@@ -136,13 +136,13 @@ module.exports.init = ( argv = process.argv ) => {
 			`    $ ${ Style.yellow(`pancake /Users/you/project/folder`) }\n\n` +
 			`  ${ Style.bold(`SETTINGS`) }        - Set global settings. Available settings are: ${ Style.yellow( Object.keys( SETTINGS ).join(', ') ) }.\n` +
 			`    $ ${ Style.yellow(`pancake --set npmOrg "@yourOrg @anotherOrg"`) }\n` +
-			`    $ ${ Style.yellow(`pancake --set ignorePlugins @gov.au/pancake-sass,@gov.au/pancake-svg`) }\n\n` +
+			`    $ ${ Style.yellow(`pancake --set ignorePlugins @gold.au/pancake-sass,@gold.au/pancake-svg`) }\n\n` +
 			`  ${ Style.bold(`ORG`) }             - Change the org scope of the pancake modules you like to use.\n` +
 			`    $ ${ Style.yellow(`pancake --org "@your.org"`) }\n\n` +
 			`  ${ Style.bold(`PLUGINS`) }         - Temporarily turn off all plugins.\n` +
 			`    $ ${ Style.yellow(`pancake --noplugins`) }\n\n` +
 			`  ${ Style.bold(`IGNORED PLUGINS`) } - Prevent a certain plugin(s) from being installed and run.\n` +
-			`    $ ${ Style.yellow(`pancake --ignore @gov.au/pancake-js,@gov.au/pancake-sass`) }\n\n` +
+			`    $ ${ Style.yellow(`pancake --ignore @gold.au/pancake-js,@gold.au/pancake-sass`) }\n\n` +
 			`  ${ Style.bold(`DON’T SAVE`) }      - Prevent pancake to save it’s settings into your package.json.\n` +
 			`    $ ${ Style.yellow(`pancake --nosave`) }\n\n` +
 			`  ${ Style.bold(`HELP`) }            - Display the help (this screen).\n` +

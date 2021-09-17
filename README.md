@@ -1,5 +1,3 @@
-> **The Australian Government Design System has been decommissioned [Visit our community page for more information](https://community.digital.gov.au/t/dta-design-system-has-been-decommissioned/4649)**
-
 Pancake
 =======
 
@@ -32,7 +30,7 @@ Pancake will check your `"peerDependencies"` for conflicts and comes with plugin
 
 If you are creating a new project using Pancake you will want to look into creating your own [Pancake modules](#creating-your-own-pancake-modules).
 
-Pancake comes installed with Australian Government Design System components. To know if you have `pancake` installed, check your `package.json` file for a `"pancake": { ... }` object. If you have this and you want to change the output look at the [Pancake settings](#settings) section.
+Pancake comes installed with GOLD Design System components. To know if you have `pancake` installed, check your `package.json` file for a `"pancake": { ... }` object. If you have this and you want to change the output look at the [Pancake settings](#settings) section.
 
 If you have issues with using SASS globals in a ReactJS project, please check out the [Design System React starter repo](https://github.com/govau/design-system-starter-react) for an example.
 
@@ -71,7 +69,7 @@ npx pancake --set [settingName] [value]
 
 |     setting     |                 value                 |  default  |
 |-----------------|---------------------------------------|-----------|
-|     `npmOrg`    | This is the npm org scope             | `@gov.au` |
+|     `npmOrg`    | This is the npm org scope             | `@gold.au` |
 |    `plugins`    | A switch to disable or enable plugins | `true`    |
 | `ignorePlugins` | An array of plugins to be ignored     | `[]`      |
 

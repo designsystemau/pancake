@@ -1,12 +1,13 @@
 {
-	"name": "@gov.au/pancake-sass",
-	"version": "2.3.7",
+	"name": "@gold.au/pancake-sass",
+	"version": "2.3.8",
 	"description": "A Pancake plugin to compile sass files.",
 	"keywords": [
 		"npm",
 		"flat",
 		"peerDependencies",
 		"gov.au",
+		"gold.au",
 		"auds",
 		"Commonwealth of Australia",
 		"design guide",
@@ -44,7 +45,7 @@
 		"lib/*"
 	],
 	"dependencies": {
-		"@gov.au/pancake": "~1",
+		"@gold.au/pancake": "~1",
 		"autoprefixer": "9.4.10",
 		"postcss": "7.0.14",
 		"node-sass": "^4.11.0"
@@ -60,17 +61,17 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/govau/pancake.git"
+		"url": "https://github.com/designsystemau/pancake.git"
 	},
-	"homepage": "https://github.com/govau/pancake",
+	"homepage": "https://github.com/designsystemau/pancake",
 	"bugs": {
-		"url": "https://github.com/govau/pancake/issues",
+		"url": "https://github.com/designsystemau/pancake/issues",
 		"email": "designsystem@digital.gov.au"
 	},
 	"author": {
-		"name": "Commonwealth of Australia, DTA",
-		"email": "designsystem@digital.gov.au",
-		"url": "https://www.dta.gov.au/"
+		"name": "Design System AU",
+		"email": "maintainers@designsystemau.org",
+		"url": "https://designsystemau.org/"
 	},
 	"contributors": [
 		{

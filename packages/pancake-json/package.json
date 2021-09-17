@@ -1,11 +1,12 @@
 {
-	"name": "@gov.au/pancake-json",
-	"version": "1.2.0",
+	"name": "@gold.au/pancake-json",
+	"version": "1.2.1",
 	"description": "A Pancake plugin to generate a json file from all pancake modules.",
 	"keywords": [
 		"npm",
 		"flat",
 		"peerDependencies",
+		"gold.au",
 		"gov.au",
 		"auds",
 		"Commonwealth of Australia",
@@ -46,7 +47,7 @@
 		"lib/*"
 	],
 	"dependencies": {
-		"@gov.au/pancake": "~1"
+		"@gold.au/pancake": "~1"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.2.3",
@@ -59,17 +60,16 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/govau/pancake.git"
+		"url": "https://github.com/designsystemau/pancake.git"
 	},
-	"homepage": "https://github.com/govau/pancake",
+	"homepage": "https://github.com/designsystemau/pancake",
 	"bugs": {
-		"url": "https://github.com/govau/pancake/issues",
-		"email": "designsystem@digital.gov.au"
+		"url": "https://github.com/designsystemau/pancake/issues"
 	},
 	"author": {
-		"name": "Commonwealth of Australia, DTA",
-		"email": "designsystem@digital.gov.au",
-		"url": "https://www.dta.gov.au/"
+		"name": "Design System AU",
+		"email": "maintainers@designsystemau.org",
+		"url": "https://designsystemau.org/"
 	},
 	"contributors": [
 		{
