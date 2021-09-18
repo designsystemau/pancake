@@ -2,9 +2,9 @@
  *
  * Install and run plugins
  *
- * @repo    - https://github.com/govau/pancake
+ * @repo    - https://github.com/designsystemau/pancake
  * @author  - Dominik Wilkowski
- * @license - https://raw.githubusercontent.com/govau/pancake/master/LICENSE (MIT)
+ * @license - https://raw.githubusercontent.com/designsystemau/pancake/master/LICENSE (MIT)
  *
  **************************************************************************************************************************************************************/
 
@@ -183,7 +183,7 @@ module.exports.RunPlugins = ( version, plugins, cwd, allModules, SETTINGSlocal, 
 
 			if ( Fs.existsSync( Path.normalize( `${ cwd }/../node_modules/${ plugin }` ) ) ) {
 				plugin = require( Path.normalize( `${ cwd }/../node_modules/${ plugin }` ) );
-			} 
+			}
 			else {
 				plugin = require(Path.normalize(`${ cwd }/node_modules/${ plugin }`));
 			}

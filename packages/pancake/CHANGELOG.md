@@ -74,13 +74,13 @@ Pancake
 ## v1.2.0
 
 - Pancake now searches the folder above the current/package.json folder to better support monorepos via yarn
-	([#15](https://github.com/govau/pancake/issues/15))
+	([#15](https://github.com/designsystemau/pancake/issues/15))
 
 
 ## v1.1.0
 
 - Pancake now works on windows after escaping every path separator. Other operating system, other way to break code.
-	([#14](https://github.com/govau/pancake/issues/14))
+	([#14](https://github.com/designsystemau/pancake/issues/14))
 
 
 ## v1.0.15
@@ -90,33 +90,33 @@ Pancake
 
 ## v1.0.14
 
-- Tweaked a couple functions so syrup can reuse them ([#17](https://github.com/govau/pancake/issues/17))
+- Tweaked a couple functions so syrup can reuse them ([#17](https://github.com/designsystemau/pancake/issues/17))
 
 
 ## v1.0.13
 
-- Enabled loading animation for plugin install ([#20](https://github.com/govau/pancake/issues/20))
+- Enabled loading animation for plugin install ([#20](https://github.com/designsystemau/pancake/issues/20))
 
 
 ## v1.0.12
 
-- stdio output to inherit so we can debug why plugin install is hanging ([#20](https://github.com/govau/pancake/issues/20))
+- stdio output to inherit so we can debug why plugin install is hanging ([#20](https://github.com/designsystemau/pancake/issues/20))
 
 
 ## v1.0.11
 
-- Fixed npm waiting for lock files inside the plugin install ([#20](https://github.com/govau/pancake/issues/20))
+- Fixed npm waiting for lock files inside the plugin install ([#20](https://github.com/designsystemau/pancake/issues/20))
 
 
 ## v1.0.10
 
-- Working on making the plugin install faster ([#20](https://github.com/govau/pancake/issues/20))
+- Working on making the plugin install faster ([#20](https://github.com/designsystemau/pancake/issues/20))
 
 
 ## v1.0.9
 
-- Get loading working inside child.process ([#21](https://github.com/govau/pancake/issues/21))
-- Increase speed in which the plugins are installed ([#20](https://github.com/govau/pancake/issues/20))
+- Get loading working inside child.process ([#21](https://github.com/designsystemau/pancake/issues/21))
+- Increase speed in which the plugins are installed ([#20](https://github.com/designsystemau/pancake/issues/20))
 
 
 ## v1.0.8
