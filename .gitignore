@@ -24,3 +24,4 @@ tests/*/testfolder/
 !tests/*/node_modules/*/dist/
 !tests/modules/*/lib/
 coverage/
+package-lock.json
