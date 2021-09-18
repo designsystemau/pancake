@@ -6,7 +6,7 @@ Pancake JS plugin
 
 - # 1857381: Internal references to @gov.au are now updated to use @gold.au
 
-> This is a [Pancake](https://github.com/govau/pancake) plugin to generate a json file from all pancake modules..
+> This is a [Pancake](https://github.com/designsystemau/pancake) plugin to generate a json file from all pancake modules..
 
 ## Versions
 
@@ -54,9 +54,9 @@ Pancake JS plugin
 ## v1.0.3
 
 - When `auto-save` is enabled, pancake-json would only save `"json": {}` into the `package.json` file. No more!
-  [(57)](https://github.com/govau/pancake/issues/57)
+  [(57)](https://github.com/designsystemau/pancake/issues/57)
 - When enabling `pancake-json` and `auto-save` the plugin would merge the json from the plugin into the package.json file. Like talk about over-sharing!
-  [(58)](https://github.com/govau/pancake/issues/58)
+  [(58)](https://github.com/designsystemau/pancake/issues/58)
 
 ## v1.0.2
 

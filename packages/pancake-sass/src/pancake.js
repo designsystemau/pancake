@@ -4,9 +4,9 @@
  *
  * Move and compile Sass partials.
  *
- * @repo    - https://github.com/govau/pancake
+ * @repo    - https://github.com/designsystemau/pancake
  * @author  - Dominik Wilkowski
- * @license - https://raw.githubusercontent.com/govau/pancake/master/LICENSE (MIT)
+ * @license - https://raw.githubusercontent.com/designsystemau/pancake/master/LICENSE (MIT)
  *
  **************************************************************************************************************************************************************/
 

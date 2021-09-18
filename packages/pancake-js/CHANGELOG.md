@@ -1,7 +1,7 @@
 Pancake JS plugin
 =================
 
-> This is a [Pancake](https://github.com/govau/pancake) plugin to handle js files.
+> This is a [Pancake](https://github.com/designsystemau/pancake) plugin to handle js files.
 
 
 ## Versions

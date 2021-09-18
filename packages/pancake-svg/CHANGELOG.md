@@ -6,7 +6,7 @@ Pancake SVG plugin
 
 - # 1857381: Internal references to @gov.au are now updated to use @gold.au
 
-> This is a [Pancake](https://github.com/govau/pancake) plugin to handle svg files.
+> This is a [Pancake](https://github.com/designsystemau/pancake) plugin to handle svg files.
 
 ## Versions
 

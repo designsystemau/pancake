@@ -2,9 +2,9 @@
  *
  * Getting remote json file
  *
- * @repo    - https://github.com/govau/pancake
+ * @repo    - https://github.com/designsystemau/pancake
  * @author  - Dominik Wilkowski
- * @license - https://raw.githubusercontent.com/govau/pancake/master/LICENSE (MIT)
+ * @license - https://raw.githubusercontent.com/designsystemau/pancake/master/LICENSE (MIT)
  *
  **************************************************************************************************************************************************************/
 
@@ -20,7 +20,7 @@ const Request = require( 'request' );
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Module imports
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const { Log, Style } = require( '@gov.au/pancake' );
+const { Log, Style } = require( '@gold.au/pancake' );
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------

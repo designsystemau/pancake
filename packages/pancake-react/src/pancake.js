@@ -4,9 +4,9 @@
  *
  * Move react files from pancake modules into your pancake folder
  *
- * @repo    - https://github.com/govau/pancake
+ * @repo    - https://github.com/designsystemau/pancake
  * @author  - Alex Page (and Dominik Wilkowski)
- * @license - https://raw.githubusercontent.com/govau/pancake/master/LICENSE (MIT)
+ * @license - https://raw.githubusercontent.com/designsystemau/pancake/master/LICENSE (MIT)
  *
  **************************************************************************************************************************************************************/
 

@@ -1,7 +1,7 @@
 Syrup
 =====
 
-> Syrup is a tool to make working with [pancake](https://github.com/govau/pancake) and npm easy and sweet.
+> Syrup is a tool to make working with [pancake](https://github.com/designsystemau/pancake) and npm easy and sweet.
 
 ![Syrup for Pancake](https://raw.githubusercontent.com/govau/pancake/master/packages/pancake-syrup/assets/syrup.gif)
 
@@ -51,7 +51,7 @@ gives you suggestions as to what you can do when hitting a versions conflict.
 
 ## Build
 
-To run the pancake build make sure you go to the monorepo this package came from and clone the source from there: https://github.com/govau/pancake
+To run the pancake build make sure you go to the monorepo this package came from and clone the source from there: https://github.com/designsystemau/pancake
 
 
 **[⬆ back to top](#contents)**
@@ -62,7 +62,7 @@ To run the pancake build make sure you go to the monorepo this package came from
 
 ## Tests
 
-To run the tests make sure you go to the monorepo this package came from and clone the source from there: https://github.com/govau/pancake
+To run the tests make sure you go to the monorepo this package came from and clone the source from there: https://github.com/designsystemau/pancake
 
 
 **[⬆ back to top](#contents)**
@@ -95,7 +95,7 @@ To run the tests make sure you go to the monorepo this package came from and clo
 ## License
 
 Copyright (c) Commonwealth of Australia.
-Licensed under [MIT](https://raw.githubusercontent.com/govau/pancake/master/LICENSE).
+Licensed under [MIT](https://raw.githubusercontent.com/designsystemau/pancake/master/LICENSE).
 
 
 **[⬆ back to top](#contents)**

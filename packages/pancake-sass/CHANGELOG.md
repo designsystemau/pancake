@@ -6,7 +6,7 @@ Pancake Sass plugin
 
 - # 1857381: Internal references to @gov.au are now updated to use @gold.au
 
-> This is a [Pancake](https://github.com/govau/pancake) plugin to handle sass files.
+> This is a [Pancake](https://github.com/designsystemau/pancake) plugin to handle sass files.
 
 ## Versions
 
@@ -89,7 +89,7 @@ Pancake Sass plugin
 ## v1.3.0
 
 - Pancake now searches the folder above the current/package.json folder to better support monorepos via yarn
-  ([#15](https://github.com/govau/pancake/issues/15))
+  ([#15](https://github.com/designsystemau/pancake/issues/15))
 
 ## v1.2.0
 
@@ -103,7 +103,7 @@ Pancake Sass plugin
 ## v1.1.0
 
 - Pancake now works on windows after escaping every path separator. Other operating system, other way to break code.
-  ([#14](https://github.com/govau/pancake/issues/14))
+  ([#14](https://github.com/designsystemau/pancake/issues/14))
 
 ## v1.0.11
 
