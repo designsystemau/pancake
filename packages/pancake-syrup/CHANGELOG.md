@@ -1,5 +1,11 @@
 Syrup
 
+## 1.2.2
+
+### Patch Changes
+
+- 45ec7f3: Fixes internal pointers from @gov.au/pancake to @gold.au
+
 ## 1.2.1
 
 ### Patch Changes
