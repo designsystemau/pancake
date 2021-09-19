@@ -1,5 +1,16 @@
 Pancake JS plugin
 
+## 2.0.0
+
+### Major Changes
+
+- bae24a3: Publish to npm scope at @gold.au
+
+### Patch Changes
+
+- Updated dependencies [bae24a3]
+  - @gold.au/pancake@2.0.0
+
 ## 1.2.1
 
 ### Patch Changes
