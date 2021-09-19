@@ -227,7 +227,7 @@ module.exports.init = ( argv = process.argv ) => {
 			}
 
 			//getting the longest name of all pancake modules for nice alignment
-			const longestName = Object.keys( PANCAKE ).reduce( ( a, b) => a.length > b.length ? a : b ).length - ( SETTINGS.npmOrg.length + 1 );
+			const longestName = Object.keys( PANCAKE ).reduce( ( a, b) => a.length > b.length ? a : b ).length - ( SETTINGS.npmOrg.length );
 
 			Log.verbose(
 				`Got all data from the json file and installed modules:\n` +
