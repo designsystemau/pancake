@@ -13,7 +13,6 @@ Run a Syrup session:
 
     npx @gold.au/syrup 
 
-
 ## Requirements
 
 - npm version >= `~3.0.0`

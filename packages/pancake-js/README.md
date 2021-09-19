@@ -5,7 +5,7 @@ Pancake JS plugin
 
 Pancake JS is a dependency of pancake.
 
-It can bc configured in your project's package.json file.  
+It can be configured in your project's package.json file.  
 
 
 # };
