@@ -1,6 +1,6 @@
 {
 	"name": "@gold.au/pancake-json",
-	"version": "1.2.1",
+	"version": "2.0.0",
 	"description": "A Pancake plugin to generate a json file from all pancake modules.",
 	"keywords": [
 		"npm",
@@ -47,7 +47,7 @@
 		"lib/*"
 	],
 	"dependencies": {
-		"@gold.au/pancake": "~1"
+		"@gold.au/pancake": "~2.0.0"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.2.3",

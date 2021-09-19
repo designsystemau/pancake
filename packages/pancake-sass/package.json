@@ -1,6 +1,6 @@
 {
 	"name": "@gold.au/pancake-sass",
-	"version": "2.3.8",
+	"version": "3.0.0",
 	"description": "A Pancake plugin to compile sass files.",
 	"keywords": [
 		"npm",
@@ -45,7 +45,7 @@
 		"lib/*"
 	],
 	"dependencies": {
-		"@gold.au/pancake": "~1",
+		"@gold.au/pancake": "~2.0.0",
 		"autoprefixer": "9.4.10",
 		"postcss": "7.0.14",
 		"node-sass": "^4.11.0"

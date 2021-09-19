@@ -1,5 +1,16 @@
 Pancake Sass plugin
 
+## 3.0.0
+
+### Major Changes
+
+- bae24a3: Publish to npm scope at @gold.au
+
+### Patch Changes
+
+- Updated dependencies [bae24a3]
+  - @gold.au/pancake@2.0.0
+
 ## 2.3.8
 
 ### Patch Changes

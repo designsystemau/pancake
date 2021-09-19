@@ -1,6 +1,6 @@
 {
 	"name": "@gold.au/pancake-react",
-	"version": "1.3.0",
+	"version": "2.0.0",
 	"description": "A Pancake plugin to move react files.",
 	"keywords": [
 		"npm",
@@ -46,7 +46,7 @@
 		"lib/*"
 	],
 	"dependencies": {
-		"@gold.au/pancake": "~1"
+		"@gold.au/pancake": "~2.0.0"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.2.3",
