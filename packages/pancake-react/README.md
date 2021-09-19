@@ -1,87 +1,11 @@
-Pancake JS plugin
+Pancake React plugin
 =================
 
-> This is a [Pancake](https://github.com/designsystemau/pancake) plugin to handle js files.
+> This is a [Pancake](https://github.com/designsystemau/pancake) plugin to handle React files.
 
+Pancake React is a dependency of pancake.
 
-## Contents
+It can be configured in your project's package.json file.  
 
-* [Install](#install)
-* [Build](#build)
-* [Tests](#tests)
-* [Release History](#release-history)
-* [License](#license)
-
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-## Install
-
-
-```shell
-yarn add @gold.au/pancake
-```
-
-```shell
-npm install @gold.au/pancake --save-dev
-```
-
-
-**[⬆ back to top](#contents)**
-
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-## Build
-
-To run the pancake build make sure you go to the monorepo this package came from and clone the source from there: https://github.com/designsystemau/pancake
-
-
-**[⬆ back to top](#contents)**
-
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-## Tests
-
-To run the tests make sure you go to the monorepo this package came from and clone the source from there: https://github.com/designsystemau/pancake
-
-
-**[⬆ back to top](#contents)**
-
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-## Release History
-
-* v1.3.0 - Update dependencies
-* v1.2.0 - Multiple organisations
-* v1.1.5 - Update dependencies
-* v1.1.4 - Update dependencies
-* v1.1.3 - Update node modules
-* v1.1.2 - Update forgotten changelog
-* v1.1.1 - Update node modules
-* v1.1.0 - Added ability to disable react output
-* v1.0.1 - Fixed double version comments in react files
-* v1.0.0 - 💥 Initial version
-
-
-**[⬆ back to top](#contents)**
-
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-## License
-
-Copyright (c) Commonwealth of Australia.
-Licensed under [MIT](https://raw.githubusercontent.com/designsystemau/pancake/master/LICENSE).
-
-
-**[⬆ back to top](#contents)**
 
 # };
