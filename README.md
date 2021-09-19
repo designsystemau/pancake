@@ -14,7 +14,7 @@ Pancake will check your `"peerDependencies"` for conflicts and comes with plugin
 
 ## Getting started
 
-Pancake comes installed with GOLD Design System components. To know if you have `pancake` installed, check your `package.json` file for a `"pancake": { ... }` object. You can configure this at [Pancake settings](#settings) section.
+Pancake comes installed with GOLD Design System components. It can be configured for each project in the `pancake` configuration within package.json. See more information about Settings at [`@gold.au/pancake` README](packages/pancake/README.md).  
 
 If you have issues with using SASS globals in a ReactJS project, please check out the [Design System React starter repo](https://github.com/govau/design-system-starter-react) for an example.
 
