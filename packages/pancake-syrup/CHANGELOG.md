@@ -1,5 +1,11 @@
 Syrup
 
+## 2.0.1
+
+### Patch Changes
+
+- 6ce2e9b: Update readme
+
 ## 2.0.0
 
 ### Major Changes
