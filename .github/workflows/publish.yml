@@ -1,4 +1,4 @@
-name: Create PR to publish to npm
+name: Publish
 on:
   push:
     branches:
@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile --silent
 
-      - name: Create Release Pull Request
+      - name: Create Release Pull Request --or-- Publish to npm
         uses: changesets/action@master
         with:
           publish: yarn pkgs:release
