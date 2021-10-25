@@ -46,8 +46,8 @@
 	],
 	"dependencies": {
 		"@gold.au/pancake": "~2.0.0",
-		"autoprefixer": "9.4.10",
-		"postcss": "7.0.14",
+		"autoprefixer": "~10.3.7",
+		"postcss": "~8.3.11",
 		"node-sass": "^4.11.0"
 	},
 	"devDependencies": {
