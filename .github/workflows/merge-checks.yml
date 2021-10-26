@@ -31,5 +31,5 @@ jobs:
       - name: E2E tests
         run: yarn test:end-to-end
 
-      # - name: Unit tests
-      #   run: yarn test:unit-test
+      - name: Unit tests
+        run: yarn test:unit-test
