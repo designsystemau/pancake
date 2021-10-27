@@ -10,18 +10,15 @@
 
 'use strict';
 
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Dependencies
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const Inquirer = require('inquirer' );
-
+const Inquirer = require('inquirer');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Exports
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const { Log, Style, Semver } = require( '@gold.au/pancake' );
-
+const { Log, Style, Semver } = require('@gold.au/pancake');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Check npm version
@@ -34,30 +31,37 @@ const { Log, Style, Semver } = require( '@gold.au/pancake' );
  *
  * @return {string}            - Highlighted newVersion
  */
-module.exports.HighlightDiff = ( oldVersion, newVersion ) => {
-	if( !Semver.valid( oldVersion ) ) {
-		Log.error(`Version is not a valid semver version: ${ Style.yellow( oldVersion ) }`);
+module.exports.HighlightDiff = (oldVersion, newVersion) => {
+	if (!Semver.valid(oldVersion)) {
+		Log.error(
+			`Version is not a valid semver version: ${Style.yellow(oldVersion)}`
+		);
 	}
 
-	if( !Semver.valid( newVersion ) ) {
-		Log.error(`Version is not a valid semver version: ${ Style.yellow( newVersion ) }`);
+	if (!Semver.valid(newVersion)) {
+		Log.error(
+			`Version is not a valid semver version: ${Style.yellow(newVersion)}`
+		);
 	}
 
-	if( Semver.major( oldVersion ) !== Semver.major( newVersion ) ) {
-		return Style.magenta( newVersion );
+	if (Semver.major(oldVersion) !== Semver.major(newVersion)) {
+		return Style.magenta(newVersion);
 	}
 
-	if( Semver.minor( oldVersion ) !== Semver.minor( newVersion ) ) {
-		return `${ Semver.major( newVersion ) }.${ Style.magenta(`${ Semver.minor( newVersion ) }.${ Semver.patch( newVersion ) }`)}`;
+	if (Semver.minor(oldVersion) !== Semver.minor(newVersion)) {
+		return `${Semver.major(newVersion)}.${Style.magenta(
+			`${Semver.minor(newVersion)}.${Semver.patch(newVersion)}`
+		)}`;
 	}
 
-	if( Semver.patch( oldVersion ) !== Semver.patch( newVersion ) ) {
-		return `${ Semver.major( newVersion ) }.${ Semver.minor( newVersion ) }.${ Style.magenta(`${ Semver.patch( newVersion ) }`)}`;
+	if (Semver.patch(oldVersion) !== Semver.patch(newVersion)) {
+		return `${Semver.major(newVersion)}.${Semver.minor(
+			newVersion
+		)}.${Style.magenta(`${Semver.patch(newVersion)}`)}`;
 	}
 
 	return newVersion;
 };
-
 
 /**
  * Return a couple Inquirer separator used as a headline
@@ -68,15 +72,17 @@ module.exports.HighlightDiff = ( oldVersion, newVersion ) => {
  *
  * @return {object}          - The Inquirer.Separator object
  */
-module.exports.Headline = ( headline, subline = '', longestName ) => {
-	let sideHeader = ( longestName - ( 4 * 2 ) - headline.length ) / 2; //calculate the sides for the headline for center alignment
-	let sideSubline = ( longestName + 2 - subline.length ) / 2;         //calculate the sides for the subline for center alignment
+module.exports.Headline = (headline, subline = '', longestName) => {
+	let sideHeader = (longestName - 4 * 2 - headline.length) / 2; //calculate the sides for the headline for center alignment
+	let sideSubline = (longestName + 2 - subline.length) / 2; //calculate the sides for the subline for center alignment
 
-	if( sideHeader < 0 ) { //getting edgy
+	if (sideHeader < 0) {
+		//getting edgy
 		sideHeader = 0;
 	}
 
-	if( sideSubline < 0 ) { //getting edgy
+	if (sideSubline < 0) {
+		//getting edgy
 		sideSubline = 0;
 	}
 
@@ -84,11 +90,19 @@ module.exports.Headline = ( headline, subline = '', longestName ) => {
 		new Inquirer.Separator(` `),
 		new Inquirer.Separator(
 			`\u001b[0m\u001b[44m\u001b[1m\u001b[36m` +
-			`  ═${ '═'.repeat( Math.ceil( sideHeader ) ) }╡ ${ headline } ╞${ '═'.repeat( Math.floor( sideHeader ) ) }═  ` +
-			`\u001b[39m\u001b[22m\u001b[49m\u001b[0m`
+				`  ═${'═'.repeat(Math.ceil(sideHeader))}╡ ${headline} ╞${'═'.repeat(
+					Math.floor(sideHeader)
+				)}═  ` +
+				`\u001b[39m\u001b[22m\u001b[49m\u001b[0m`
 		),
 		new Inquirer.Separator(
-			`${ subline.length > 0 ? `${ ' '.repeat( Math.floor( sideSubline ) ) }\u001b[0m${ Style.cyan( subline ) }\u001b[0m` : `` }`
+			`${
+				subline.length > 0
+					? `${' '.repeat(Math.floor(sideSubline))}\u001b[0m${Style.cyan(
+							subline
+					  )}\u001b[0m`
+					: ``
+			}`
 		),
 	];
 };

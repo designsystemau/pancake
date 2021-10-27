@@ -12,19 +12,23 @@
 
 'use strict';
 
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Dependencies
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const Path = require( 'path' );
-const Fs = require( 'fs' );
-
+const Path = require('path');
+const Fs = require('fs');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Module imports
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const { Log, Style, Loading, CopyFile, ReadFile, WriteFile } = require( '@gold.au/pancake' );
-
+const {
+	Log,
+	Style,
+	Loading,
+	CopyFile,
+	ReadFile,
+	WriteFile,
+} = require('@gold.au/pancake');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Plugin export
@@ -40,12 +44,12 @@ const { Log, Style, Loading, CopyFile, ReadFile, WriteFile } = require( '@gold.a
  *
  * @return {Promise object}  - Returns an object of the settings we want to save
  */
-module.exports.pancake = ( version, modules, settings, GlobalSettings, cwd ) => {
+module.exports.pancake = (version, modules, settings, GlobalSettings, cwd) => {
 	Loading.start('pancake-svg');
 
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Settings
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+	// Settings
+	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 	let SETTINGS = {
 		svg: {
 			modules: false,
@@ -56,106 +60,120 @@ module.exports.pancake = ( version, modules, settings, GlobalSettings, cwd ) => 
 	};
 
 	//merging settings with host settings
-	Object.assign( SETTINGS.svg, settings.svg );
+	Object.assign(SETTINGS.svg, settings.svg);
 
-
-	return new Promise( ( resolve, reject ) => {
+	return new Promise((resolve, reject) => {
 		//some housekeeping
-		if( typeof version !== 'string' ) {
+		if (typeof version !== 'string') {
 			reject(
-				`Plugin pancake-svg got a mismatch for the data that was passed to it! ${ Style.yellow(`version`) } was ${ Style.yellow( typeof version ) } ` +
-				`but should have been ${ Style.yellow(`string`) }`
+				`Plugin pancake-svg got a mismatch for the data that was passed to it! ${Style.yellow(
+					`version`
+				)} was ${Style.yellow(typeof version)} ` +
+					`but should have been ${Style.yellow(`string`)}`
 			);
 		}
 
-		if( typeof modules !== 'object' ) {
+		if (typeof modules !== 'object') {
 			reject(
-				`Plugin pancake-svg got a mismatch for the data that was passed to it! ${ Style.yellow(`modules`) } was ${ Style.yellow( typeof modules ) } ` +
-				`but should have been ${ Style.yellow(`object`) }`
+				`Plugin pancake-svg got a mismatch for the data that was passed to it! ${Style.yellow(
+					`modules`
+				)} was ${Style.yellow(typeof modules)} ` +
+					`but should have been ${Style.yellow(`object`)}`
 			);
 		}
 
-		if( typeof settings !== 'object' ) {
+		if (typeof settings !== 'object') {
 			reject(
-				`Plugin pancake-svg got a mismatch for the data that was passed to it! ${ Style.yellow(`settings`) } was ${ Style.yellow( typeof settings ) } ` +
-				`but should have been ${ Style.yellow(`object`) }`
+				`Plugin pancake-svg got a mismatch for the data that was passed to it! ${Style.yellow(
+					`settings`
+				)} was ${Style.yellow(typeof settings)} ` +
+					`but should have been ${Style.yellow(`object`)}`
 			);
 		}
 
-		if( typeof cwd !== 'string' ) {
+		if (typeof cwd !== 'string') {
 			reject(
-				`Plugin pancake-svg got a mismatch for the data that was passed to it! ${ Style.yellow(`cwd`) } was ${ Style.yellow( typeof cwd ) } ` +
-				`but should have been ${ Style.yellow(`string`) }`
+				`Plugin pancake-svg got a mismatch for the data that was passed to it! ${Style.yellow(
+					`cwd`
+				)} was ${Style.yellow(typeof cwd)} ` +
+					`but should have been ${Style.yellow(`string`)}`
 			);
 		}
 
+		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+		// Variables to be filled
+		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+		let compiledAll = []; //for collect all promises
 
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Variables to be filled
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-		let compiledAll = [];      //for collect all promises
-
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Iterate over each module
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-		for( const modulePackage of modules ) {
-			Log.verbose(`SVG: Building ${ Style.yellow( modulePackage.name ) }`);
+		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+		// Iterate over each module
+		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+		for (const modulePackage of modules) {
+			Log.verbose(`SVG: Building ${Style.yellow(modulePackage.name)}`);
 
 			//check if there are svg files
-			const sassModulePath = Path.normalize(`${ modulePackage.path }/${ modulePackage.pancake['pancake-module'].svg.path }`);
+			const sassModulePath = Path.normalize(
+				`${modulePackage.path}/${modulePackage.pancake['pancake-module'].svg.path}`
+			);
 
-			if( !Fs.existsSync( sassModulePath ) ) {
-				Log.verbose(`SVG: No SVG found in ${ Style.yellow( sassModulePath ) }`)
-			}
-			else {
-				Log.verbose(`SVG: ${ Style.green('⌘') } Found SVG files in ${ Style.yellow( sassModulePath ) }`);
+			if (!Fs.existsSync(sassModulePath)) {
+				Log.verbose(`SVG: No SVG found in ${Style.yellow(sassModulePath)}`);
+			} else {
+				Log.verbose(
+					`SVG: ${Style.green('⌘')} Found SVG files in ${Style.yellow(
+						sassModulePath
+					)}`
+				);
 			}
 		}
 
-
-		if( modules.length < 1 ) {
+		if (modules.length < 1) {
 			Loading.stop('pancake-svg'); //stop loading animation
 
 			Log.info(`No pancake modules found 😬`);
-			resolve( SETTINGS );
-		}
-		else {
-
+			resolve(SETTINGS);
+		} else {
 			//get all svgs
-			const svgs = Fs
-				.readdirSync( SVGModulePath )                                   //read all files in the svg folder
-				.filter( name => !name.startsWith('.') )                        //let’s hide hidden files
-				.map( name => Path.normalize(`${ SVGModulePath }/${ name }`) ); //making them absolute paths
+			const svgs = Fs.readdirSync(SVGModulePath) //read all files in the svg folder
+				.filter((name) => !name.startsWith('.')) //let’s hide hidden files
+				.map((name) => Path.normalize(`${SVGModulePath}/${name}`)); //making them absolute paths
 
 			//convert svg to png
-			if( SettingsSVG.pngs !== false ) {
-				Log.verbose(`Converting svgs to PNGs for ${ Style.yellow( modulePackage.name ) }`);
+			if (SettingsSVG.pngs !== false) {
+				Log.verbose(
+					`Converting svgs to PNGs for ${Style.yellow(modulePackage.name)}`
+				);
 
-				const location = Path.normalize(`${ pkgPath }/${ SettingsSVG.pngs }/`);
+				const location = Path.normalize(`${pkgPath}/${SettingsSVG.pngs}/`);
 
-				CreateDir( location );  //create directory
+				CreateDir(location); //create directory
 
-				console.log = text => {};        //temporarily display console
+				console.log = (text) => {}; //temporarily display console
 
-				compiledAll.push( SvgToPng.convert( svgs, location ) );
+				compiledAll.push(SvgToPng.convert(svgs, location));
 
-				console.log = function( text ) { //enable again
-					process.stdout.write(`${ Util.format.apply( null, arguments ) }\n`);
+				console.log = function (text) {
+					//enable again
+					process.stdout.write(`${Util.format.apply(null, arguments)}\n`);
 				};
 			}
 
 			//create svg sprite
-			if( SettingsSVG.name !== false ) {
-				Log.verbose(`Converting svgs to sprite for ${ Style.yellow( modulePackage.name ) }`);
+			if (SettingsSVG.name !== false) {
+				Log.verbose(
+					`Converting svgs to sprite for ${Style.yellow(modulePackage.name)}`
+				);
 
-				const location = Path.normalize(`${ pkgPath }/${ SettingsSVG.location }/${ SettingsSVG.name }`);
+				const location = Path.normalize(
+					`${pkgPath}/${SettingsSVG.location}/${SettingsSVG.name}`
+				);
 
 				// console.log(SvgGenerator);
 
-				SvgGenerator.spriteFromFiles([ SVGModulePath, location ])
-					.then(function (rs) {
-						console.log(rs);
+				SvgGenerator.spriteFromFiles([SVGModulePath, location]).then(function (
+					rs
+				) {
+					console.log(rs);
 				});
 
 				// console.log(result);
@@ -179,21 +197,19 @@ module.exports.pancake = ( version, modules, settings, GlobalSettings, cwd ) => 
 				// });
 			}
 
-
 			//after all files have been compiled and written
-			Promise.all( compiledAll )
-				.catch( error => {
+			Promise.all(compiledAll)
+				.catch((error) => {
 					Loading.stop('pancake-svg'); //stop loading animation
 
-					Log.error(`SVG plugin ran into an error: ${ error }`);
+					Log.error(`SVG plugin ran into an error: ${error}`);
 				})
-				.then( () => {
+				.then(() => {
 					Loading.stop('pancake-svg'); //stop loading animation
 
 					Log.ok('SVG PLUGIN FINISHED');
-					resolve( SETTINGS );
-			});
+					resolve(SETTINGS);
+				});
 		}
-
 	});
-}
+};

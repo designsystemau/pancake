@@ -6,9 +6,7 @@
  *
  **************************************************************************************************************************************************************/
 
-
-const { ParseArgs } = require( '../src/parse-arguments' );
-
+const { ParseArgs } = require('../src/parse-arguments');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // ParseArgs function
@@ -17,16 +15,12 @@ const { ParseArgs } = require( '../src/parse-arguments' );
  * Test for running a single command
  */
 const settings = {
-	'npmOrg': '@gov.au @nsw.gov.au',
-	'plugins': true,
-	'ignorePlugins': [],
+	npmOrg: '@gov.au @nsw.gov.au',
+	plugins: true,
+	ignorePlugins: [],
 };
 
-const argsSingleCommand = [
-	'node',
-	'pancake',
-	'--help',
-];
+const argsSingleCommand = ['node', 'pancake', '--help'];
 
 const resultSingleComand = {
 	cwd: undefined,
@@ -41,19 +35,15 @@ const resultSingleComand = {
 };
 
 test('Parse args should return correct object for a single command', () => {
-	expect( ParseArgs( settings, argsSingleCommand ) ).toMatchObject( resultSingleComand );
+	expect(ParseArgs(settings, argsSingleCommand)).toMatchObject(
+		resultSingleComand
+	);
 });
-
 
 /**
  * Test for running two commands
  */
-const argsTwoCommands = [
-	'node',
-	'pancake',
-	'--help',
-	'--noplugins',
-];
+const argsTwoCommands = ['node', 'pancake', '--help', '--noplugins'];
 
 const resultTwoComands = {
 	cwd: undefined,
@@ -68,9 +58,8 @@ const resultTwoComands = {
 };
 
 test('Parse args should return correct object for a single command', () => {
-	expect( ParseArgs( settings, argsTwoCommands ) ).toMatchObject( resultTwoComands );
+	expect(ParseArgs(settings, argsTwoCommands)).toMatchObject(resultTwoComands);
 });
-
 
 /**
  * Test for running all commands
@@ -96,23 +85,16 @@ const resultMultiple = {
 	version: true,
 	verbose: true,
 	nosave: true,
-	set: [
-		'npmOrg',
-		'@yourOrg',
-	],
+	set: ['npmOrg', '@yourOrg'],
 	org: settings.npmOrg,
 	plugins: false,
-	ignorePlugins: [
-		'@gov.au/pancake-js',
-		'@gov.au/pancake-sass',
-	],
+	ignorePlugins: ['@gov.au/pancake-js', '@gov.au/pancake-sass'],
 	help: true,
 };
 
 test('Parse args should return correct object for a single command', () => {
-	expect( ParseArgs( settings, argsMultiple ) ).toMatchObject( resultMultiple );
+	expect(ParseArgs(settings, argsMultiple)).toMatchObject(resultMultiple);
 });
-
 
 /**
  * Test for running all commands as shortcuts
@@ -131,8 +113,8 @@ const argsMultipleShort = [
 	'-i',
 	'@gov.au/pancake-js,@gov.au/pancake-sass',
 	'-h',
-]
+];
 
 test('Parse args should return correct object for a single command', () => {
-	expect( ParseArgs( settings, argsMultipleShort ) ).toMatchObject( resultMultiple );
+	expect(ParseArgs(settings, argsMultipleShort)).toMatchObject(resultMultiple);
 });

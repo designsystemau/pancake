@@ -1,5 +1,4 @@
-Syrup
-=====
+# Syrup
 
 > Syrup is a tool to make working with [Pancake](https://github.com/designsystemau/pancake) and npm easy and sweet.
 
@@ -11,12 +10,11 @@ Syrup lets you install [Design System Components](https://github.com/govau/desig
 
 Run a Syrup session:
 
-    npx @gold.au/syrup 
+    npx @gold.au/syrup
 
 ## Requirements
 
 - npm version >= `~3.0.0`
 - A `package.json` file in your root (run `npm init --yes`)
-
 
 # };

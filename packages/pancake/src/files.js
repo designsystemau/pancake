@@ -10,19 +10,16 @@
 
 'use strict';
 
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Dependencies
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const Path = require( 'path' );
-const Fs = require( 'fs' );
-
+const Path = require('path');
+const Fs = require('fs');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Included modules
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const { Log, Style } = require( './logging' );
-
+const { Log, Style } = require('./logging');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Get all folders inside a folder
@@ -34,25 +31,23 @@ const { Log, Style } = require( './logging' );
  *
  * @return {array}            - An array of paths to each folder
  */
-module.exports.GetFolders = thisPath => {
-	Log.verbose(`Looking for folders in ${ Style.yellow( thisPath ) }`);
+module.exports.GetFolders = (thisPath) => {
+	Log.verbose(`Looking for folders in ${Style.yellow(thisPath)}`);
 
 	try {
-		return Fs
-			.readdirSync( Path.normalize( thisPath ) )                                               //read the folders content
+		return Fs.readdirSync(Path.normalize(thisPath)) //read the folders content
 			.filter(
-				thisFile => Fs.statSync( Path.normalize(`${ thisPath }/${ thisFile }`) ).isDirectory() //only return directories
+				(thisFile) =>
+					Fs.statSync(Path.normalize(`${thisPath}/${thisFile}`)).isDirectory() //only return directories
 			)
-			.map( path => Path.normalize(`${ thisPath }/${ path }`) );                               //return with path
-	}
-	catch( error ) {
-		Log.verbose(`${ Style.yellow( thisPath ) } not found`);
+			.map((path) => Path.normalize(`${thisPath}/${path}`)); //return with path
+	} catch (error) {
+		Log.verbose(`${Style.yellow(thisPath)} not found`);
 		// Log.error( error );
 
 		return [];
 	}
 };
-
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Create all folders in a path
@@ -64,47 +59,49 @@ module.exports.GetFolders = thisPath => {
  *
  * @return {string}           - The path that was just worked at
  */
-const CreateDir = ( dir ) => {
-	Log.verbose(`Creating path ${ Style.yellow( dir ) }`);
+const CreateDir = (dir) => {
+	Log.verbose(`Creating path ${Style.yellow(dir)}`);
 
-	const splitPath = dir.split( Path.sep );
+	const splitPath = dir.split(Path.sep);
 
-	splitPath.reduce( ( path, subPath ) => {
+	splitPath.reduce((path, subPath) => {
 		let currentPath;
 
-		if( /^win/.test( process.platform ) && path === '' ) { // when using windows (post truth) at beginning of the path
-			path = './';                                         // we add the prefix to make sure it works on windows (yuck)
+		if (/^win/.test(process.platform) && path === '') {
+			// when using windows (post truth) at beginning of the path
+			path = './'; // we add the prefix to make sure it works on windows (yuck)
 		}
 
-		if( subPath != '.' ) {
-			currentPath = Path.normalize(`${ path }/${ subPath }`);
+		if (subPath != '.') {
+			currentPath = Path.normalize(`${path}/${subPath}`);
 
-			Log.verbose(`Checking if ${ Style.yellow( currentPath ) } exists`)
+			Log.verbose(`Checking if ${Style.yellow(currentPath)} exists`);
 
-			if( !Fs.existsSync( currentPath ) ) {
+			if (!Fs.existsSync(currentPath)) {
 				try {
-					Fs.mkdirSync( currentPath );
+					Fs.mkdirSync(currentPath);
 
-					Log.verbose(`Successfully ${ Style.yellow( currentPath ) } created`)
-				}
-				catch( error ) {
-					Log.error(`Pancake was unable to create the folder ${ Style.yellow( currentPath ) } for path ${ Style.yellow( dir ) }`);
-					Log.error( error );
+					Log.verbose(`Successfully ${Style.yellow(currentPath)} created`);
+				} catch (error) {
+					Log.error(
+						`Pancake was unable to create the folder ${Style.yellow(
+							currentPath
+						)} for path ${Style.yellow(dir)}`
+					);
+					Log.error(error);
 
-					process.exit( 1 );
+					process.exit(1);
 				}
 			}
-		}
-		else {
+		} else {
 			currentPath = subPath;
 		}
 
 		return currentPath;
 	}, '');
 
-	return splitPath.join( Path.sep );
+	return splitPath.join(Path.sep);
 };
-
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Write file
@@ -117,26 +114,24 @@ const CreateDir = ( dir ) => {
  *
  * @return {promise object}  - Boolean true for 👍 || string error for 👎
  */
-const WriteFile = ( location, content ) => {
-	CreateDir( Path.dirname( location ) );
+const WriteFile = (location, content) => {
+	CreateDir(Path.dirname(location));
 
-	return new Promise( ( resolve, reject ) => {
-		Fs.writeFile( location, content, `utf8`, ( error ) => {
-			if( error ) {
-				Log.error(`Writing file failed for ${ Style.yellow( location ) }`);
-				Log.error( JSON.stringify( error ) );
+	return new Promise((resolve, reject) => {
+		Fs.writeFile(location, content, `utf8`, (error) => {
+			if (error) {
+				Log.error(`Writing file failed for ${Style.yellow(location)}`);
+				Log.error(JSON.stringify(error));
 
-				reject( error );
-			}
-			else {
-				Log.verbose(`Successfully written ${ Style.yellow( location ) }`);
+				reject(error);
+			} else {
+				Log.verbose(`Successfully written ${Style.yellow(location)}`);
 
-				resolve( true );
+				resolve(true);
 			}
 		});
 	});
 };
-
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Read file
@@ -148,24 +143,22 @@ const WriteFile = ( location, content ) => {
  *
  * @return {promise object}  - The content of the file
  */
-module.exports.ReadFile = location => {
-	return new Promise( ( resolve, reject ) => {
-		Fs.readFile( location, `utf8`, ( error, content ) => {
-			if( error ) {
-				Log.error(`Reading file failed for ${ Style.yellow( location ) }`);
-				Log.error( JSON.stringify( error ) );
+module.exports.ReadFile = (location) => {
+	return new Promise((resolve, reject) => {
+		Fs.readFile(location, `utf8`, (error, content) => {
+			if (error) {
+				Log.error(`Reading file failed for ${Style.yellow(location)}`);
+				Log.error(JSON.stringify(error));
 
-				reject( error );
-			}
-			else {
-				Log.verbose(`Successfully read ${ Style.yellow( location ) }`);
+				reject(error);
+			} else {
+				Log.verbose(`Successfully read ${Style.yellow(location)}`);
 
-				resolve( content );
+				resolve(content);
 			}
 		});
 	});
 };
-
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Copy file
@@ -178,29 +171,29 @@ module.exports.ReadFile = location => {
  *
  * @return {promise object}  - The content of the file
  */
-module.exports.CopyFile = ( fromFile, toFile ) => {
-	CreateDir( Path.dirname( location ) );
+module.exports.CopyFile = (fromFile, toFile) => {
+	CreateDir(Path.dirname(location));
 
-	return new Promise( ( resolve, reject ) => {
-		let writeStream = Fs.createWriteStream( toFile )
-			.on( 'error', handleError )
-			.on( 'finish', () => {
-				Log.verbose(`Successfully copied ${ Style.yellow( toFile ) }`);
+	return new Promise((resolve, reject) => {
+		let writeStream = Fs.createWriteStream(toFile)
+			.on('error', handleError)
+			.on('finish', () => {
+				Log.verbose(`Successfully copied ${Style.yellow(toFile)}`);
 
 				resolve();
-		});
+			});
 
-		let readStream = Fs.createReadStream( fromFile )
-			.on( 'error', handleError )
-			.pipe( writeStream );
+		let readStream = Fs.createReadStream(fromFile)
+			.on('error', handleError)
+			.pipe(writeStream);
 
-		function handleError( error ) {
-			Log.error(`Copying file failed for ${ Style.yellow( location ) }`);
-			Log.error( JSON.stringify( error ) );
+		function handleError(error) {
+			Log.error(`Copying file failed for ${Style.yellow(location)}`);
+			Log.error(JSON.stringify(error));
 
 			readStream.destroy();
 			writeStream.end();
-			reject( error );
+			reject(error);
 		}
 	});
 };

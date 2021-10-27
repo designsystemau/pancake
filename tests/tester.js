@@ -8,7 +8,6 @@
 
 'use strict';
 
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Dependencies
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -21,16 +20,15 @@ const Path = require('path');
 const Del = require('del');
 const Fs = require(`fs`);
 
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // GLOBALS
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Constructor
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const TESTER = (() => { //constructor factory
+const TESTER = (() => {
+	//constructor factory
 
 	/**
 	 * PRIVATE
@@ -40,23 +38,29 @@ const TESTER = (() => { //constructor factory
 	 *
 	 * @return {object}        - The resulting flat object
 	 */
-	const flatten = object => {
-		return Object.assign( {}, ...function _flatten( objectBit, path = '' ) {  //spread the result into our return object
-			return [].concat(                                                       //concat everything into one level
-				...Object.keys( objectBit ).map(                                      //iterate over object
-					key => typeof objectBit[ key ] === 'object' ?                       //check if there is a nested object
-						_flatten( objectBit[ key ], `${ path }/${ key }` ) :              //call itself if there is
-						( { [ `${ path }/${ key }` ]: objectBit[ key ] } )                //append object with it’s path as key
-				)
-			)
-		}( object ) );
+	const flatten = (object) => {
+		return Object.assign(
+			{},
+			...(function _flatten(objectBit, path = '') {
+				//spread the result into our return object
+				return [].concat(
+					//concat everything into one level
+					...Object.keys(objectBit).map(
+						//iterate over object
+						(key) =>
+							typeof objectBit[key] === 'object' //check if there is a nested object
+								? _flatten(objectBit[key], `${path}/${key}`) //call itself if there is
+								: { [`${path}/${key}`]: objectBit[key] } //append object with it’s path as key
+					)
+				);
+			})(object)
+		);
 	};
 
-
 	return {
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Settings
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+		// Settings
+		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 		PASS: true,
 		UNITS: [
 			{
@@ -81,7 +85,7 @@ const TESTER = (() => { //constructor factory
 				name: 'Test3: Compile test with orgName overwrite and minification off',
 				folder: 'test3',
 				script: {
-					options: [ '--org', '@other.org' ],
+					options: ['--org', '@other.org'],
 				},
 				compare: 'pancake/',
 				empty: false,
@@ -180,7 +184,7 @@ const TESTER = (() => { //constructor factory
 				name: 'Test14: Compile test with three modules from two organisations',
 				folder: 'test14',
 				script: {
-					options: [ '--org', '@nsw.gov.au @gov.au' ],
+					options: ['--org', '@nsw.gov.au @gov.au'],
 				},
 				compare: 'pancake/',
 				empty: false,
@@ -196,7 +200,6 @@ const TESTER = (() => { //constructor factory
 			},
 		],
 
-
 		/**
 		 * Initiating test
 		 */
@@ -206,49 +209,50 @@ const TESTER = (() => { //constructor factory
 			TESTER.log.info(`Testing …`);
 
 			//loop over all folders and start each test
-			for( const unit of TESTER.UNITS ) {
-				const scriptFolder = Path.normalize(`${ __dirname }/${ unit.folder }/`);
+			for (const unit of TESTER.UNITS) {
+				const scriptFolder = Path.normalize(`${__dirname}/${unit.folder}/`);
 
 				allTasks.push(
-					TESTER
-						.delete( scriptFolder, unit )                                   //delete trash first
-						.then( () => TESTER.copyFixtures( scriptFolder, unit ) )        //copy fixtures
-						.then( () => TESTER.replaceFixtures( scriptFolder, unit ) )     //compile fixtures
-						.then( () => TESTER.run( scriptFolder, unit ) )                 //now run script
-						.then( () => TESTER.fixture( scriptFolder, unit ) )             //get hash for fixture
-						.then( result => TESTER.result( scriptFolder, unit, result ) )  //get hash for result of test
-						.then( result => TESTER.compare( unit, result ) )               //now compare both and detail errors
-						.then( success => {                                             //cleaning up after ourself
-							if( success ) {
-								TESTER.delete( scriptFolder, unit );
+					TESTER.delete(scriptFolder, unit) //delete trash first
+						.then(() => TESTER.copyFixtures(scriptFolder, unit)) //copy fixtures
+						.then(() => TESTER.replaceFixtures(scriptFolder, unit)) //compile fixtures
+						.then(() => TESTER.run(scriptFolder, unit)) //now run script
+						.then(() => TESTER.fixture(scriptFolder, unit)) //get hash for fixture
+						.then((result) => TESTER.result(scriptFolder, unit, result)) //get hash for result of test
+						.then((result) => TESTER.compare(unit, result)) //now compare both and detail errors
+						.then((success) => {
+							//cleaning up after ourself
+							if (success) {
+								TESTER.delete(scriptFolder, unit);
 							}
 						})
-						.catch( error => TESTER.log.error(`Nooo: ${ error }`) )         //catch errors...
+						.catch((error) => TESTER.log.error(`Nooo: ${error}`)) //catch errors...
 				);
 			}
 
 			//finished with all tests
-			Promise.all( allTasks )
-				.catch( error => {
-					TESTER.log.error(`An error occurred: ${ Chalk.bgWhite.black(` ${ Path.basename( error ) } `) }`);
+			Promise.all(allTasks)
+				.catch((error) => {
+					TESTER.log.error(
+						`An error occurred: ${Chalk.bgWhite.black(
+							` ${Path.basename(error)} `
+						)}`
+					);
 
-					process.exit( 1 );
+					process.exit(1);
 				})
-				.then( () => {
-					if( TESTER.PASS ) {
+				.then(() => {
+					if (TESTER.PASS) {
 						TESTER.log.finished(`😅  All tests passed`);
 
-						process.exit( 0 );
-					}
-					else {
+						process.exit(0);
+					} else {
 						TESTER.log.finished(`😳  Ouch! Some tests failed`);
 
-						process.exit( 1 );
+						process.exit(1);
 					}
-			});
-
+				});
 		},
-
 
 		/**
 		 * Deleting files from previous tests
@@ -258,30 +262,29 @@ const TESTER = (() => { //constructor factory
 		 *
 		 * @return {Promise object}
 		 */
-		delete: ( path, settings ) => {
+		delete: (path, settings) => {
 			const trash = [
-				Path.normalize(`${ path }/pancake/`),
-				Path.normalize(`${ path }/testfolder/`),
-				Path.normalize(`${ path }/yarn.lock`),
-				Path.normalize(`${ path }/*.log.*`),
-				Path.normalize(`${ path }/fixture/.DS_Store`),
-				Path.normalize(`${ path }/fixture/*/.DS_Store`),
-				Path.normalize(`${ path }/_fixture/`),
+				Path.normalize(`${path}/pancake/`),
+				Path.normalize(`${path}/testfolder/`),
+				Path.normalize(`${path}/yarn.lock`),
+				Path.normalize(`${path}/*.log.*`),
+				Path.normalize(`${path}/fixture/.DS_Store`),
+				Path.normalize(`${path}/fixture/*/.DS_Store`),
+				Path.normalize(`${path}/_fixture/`),
 			];
 
-			return new Promise( ( resolve, reject ) => {
-				Del( trash )
-					.catch( error => {
-						reject( error );
+			return new Promise((resolve, reject) => {
+				Del(trash)
+					.catch((error) => {
+						reject(error);
 					})
-					.then( paths => {
+					.then((paths) => {
 						// TESTER.log.pass(`Cleaned ${ Chalk.bgWhite.black(` ${ settings.folder } `) } folder`);
 
 						resolve();
-				});
+					});
 			});
 		},
-
 
 		/**
 		 * Copy fixture files into a temp folder for later processing
@@ -291,24 +294,25 @@ const TESTER = (() => { //constructor factory
 		 *
 		 * @return {Promise object}
 		 */
-		copyFixtures: ( path, settings ) => {
-			return new Promise( ( resolve, reject ) => {
-				if( settings.empty ) {
+		copyFixtures: (path, settings) => {
+			return new Promise((resolve, reject) => {
+				if (settings.empty) {
 					resolve();
-				}
-				else {
-					Copydir( Path.normalize(`${ path }/fixture/`) , Path.normalize(`${ path }/_fixture/`), error => {
-						if( error ) {
-							reject( error );
+				} else {
+					Copydir(
+						Path.normalize(`${path}/fixture/`),
+						Path.normalize(`${path}/_fixture/`),
+						(error) => {
+							if (error) {
+								reject(error);
+							} else {
+								resolve();
+							}
 						}
-						else {
-							resolve();
-						}
-					});
+					);
 				}
 			});
 		},
-
 
 		/**
 		 * Replace placeholders in temp fixtures
@@ -318,48 +322,47 @@ const TESTER = (() => { //constructor factory
 		 *
 		 * @return {Promise object}
 		 */
-		replaceFixtures: ( path, settings ) => {
-			return new Promise( ( resolve, reject ) => {
-				if( settings.empty ) {
+		replaceFixtures: (path, settings) => {
+			return new Promise((resolve, reject) => {
+				if (settings.empty) {
 					resolve();
-				}
-				else {
+				} else {
 					const version = require('../packages/pancake/package.json').version;
-					const sassVersion = require('../packages/pancake-sass/package.json').version;
-					const jsVersion = require('../packages/pancake-js/package.json').version;
-					const reactVersion = require('../packages/pancake-react/package.json').version;
+					const sassVersion =
+						require('../packages/pancake-sass/package.json').version;
+					const jsVersion =
+						require('../packages/pancake-js/package.json').version;
+					const reactVersion =
+						require('../packages/pancake-react/package.json').version;
 
 					Replace({
-							files: [
-								Path.normalize(`${ path }/_fixture/**`),
-							],
-							from: [
-								/\[version\]/g,
-								/\[sass-version\]/g,
-								/\[js-version\]/g,
-								/\[react-version\]/g,
-								/\[path\]/g,
-							],
-							to: [
-								version,
-								sassVersion,
-								jsVersion,
-								reactVersion,
-								Path.normalize(`${ __dirname }/..`),
-							],
-							allowEmptyPaths: true,
-							encoding: 'utf8',
+						files: [Path.normalize(`${path}/_fixture/**`)],
+						from: [
+							/\[version\]/g,
+							/\[sass-version\]/g,
+							/\[js-version\]/g,
+							/\[react-version\]/g,
+							/\[path\]/g,
+						],
+						to: [
+							version,
+							sassVersion,
+							jsVersion,
+							reactVersion,
+							Path.normalize(`${__dirname}/..`),
+						],
+						allowEmptyPaths: true,
+						encoding: 'utf8',
+					})
+						.catch((error) => {
+							reject(error);
 						})
-						.catch( error => {
-							reject( error );
-						})
-						.then( changedFiles => {
+						.then((changedFiles) => {
 							resolve();
-					});
+						});
 				}
 			});
 		},
-
 
 		/**
 		 * Running shell script
@@ -369,32 +372,32 @@ const TESTER = (() => { //constructor factory
 		 *
 		 * @return {Promise object}
 		 */
-		run: ( path, settings ) => {
-			return new Promise( ( resolve, reject ) => {
-
+		run: (path, settings) => {
+			return new Promise((resolve, reject) => {
 				// what the command would look like:
 				// console.log('node ', [ Path.normalize(`${ path }/../../packages/pancake/bin/pancake`), settings.script.command, path, ...settings.script.options ].join(' '));
 
-				Spawn
-					.spawn( 'node', [ Path.normalize(`${ path }/../../packages/pancake/bin/pancake`), /*settings.script.command,*/ path, ...settings.script.options ] )
+				Spawn.spawn('node', [
+					Path.normalize(`${path}/../../packages/pancake/bin/pancake`),
+					/*settings.script.command,*/ path,
+					...settings.script.options,
+				])
 					// .stdout.on('data', ( data ) => {
 					// 	console.log( data.toString() );
 					// })
-					.on( 'close', ( code ) => {
-						if( code === 0 ) {
+					.on('close', (code) => {
+						if (code === 0) {
 							// TESTER.log.pass(`Ran test in ${ Chalk.bgWhite.black(` ${ Path.basename( path ) } `) } folder`);
 
 							resolve();
-						}
-						else {
+						} else {
 							TESTER.PASS = false;
 
 							reject(`Script errored out!`);
 						}
-				});
+					});
 			});
 		},
-
 
 		/**
 		 * Get the checksum hash for the fixture of a test
@@ -404,28 +407,29 @@ const TESTER = (() => { //constructor factory
 		 *
 		 * @return {Promise object}  - The hash object of all files inside the fixture
 		 */
-		fixture: ( path, settings ) => {
-			return new Promise( ( resolve, reject ) => {
-				if( !settings.empty ) {
-					Dirsum.digest( Path.normalize(`${ path }/_fixture/${ settings.compare }/`), 'sha256', ( error, hashes ) => {
-						if( error ) {
-							TESTER.log.pass( error );
+		fixture: (path, settings) => {
+			return new Promise((resolve, reject) => {
+				if (!settings.empty) {
+					Dirsum.digest(
+						Path.normalize(`${path}/_fixture/${settings.compare}/`),
+						'sha256',
+						(error, hashes) => {
+							if (error) {
+								TESTER.log.pass(error);
 
-							TESTER.PASS = false;
+								TESTER.PASS = false;
 
-							reject( error );
+								reject(error);
+							} else {
+								resolve(hashes);
+							}
 						}
-						else {
-							resolve( hashes );
-						}
-					});
-				}
-				else {
+					);
+				} else {
 					resolve({});
 				}
 			});
 		},
-
 
 		/**
 		 * Get the checksum hash for the result of the test
@@ -436,34 +440,34 @@ const TESTER = (() => { //constructor factory
 		 *
 		 * @return {Promise object}  - The hash object of all files inside the resulting files
 		 */
-		result: ( path, settings, fixture ) => {
-			const location = Path.normalize(`${ path }/_fixture/${ settings.compare }/`);
+		result: (path, settings, fixture) => {
+			const location = Path.normalize(`${path}/_fixture/${settings.compare}/`);
 
-			return new Promise( ( resolve, reject ) => {
-				if( !settings.empty ) {
-					Dirsum.digest( location, 'sha256', ( error, hashes ) => {
-						if( error ) {
-							TESTER.log.error( error );
+			return new Promise((resolve, reject) => {
+				if (!settings.empty) {
+					Dirsum.digest(location, 'sha256', (error, hashes) => {
+						if (error) {
+							TESTER.log.error(error);
 
 							TESTER.PASS = false;
 
 							reject();
-						}
-						else {
-
-							resolve({ //passing it to compare later
+						} else {
+							resolve({
+								//passing it to compare later
 								fixture,
 								result: hashes,
 							});
-
 						}
 					});
-				}
-				else {
-					Fs.access( location, Fs.constants.R_OK, error => {
-
-						if( !error || error.code !== 'ENOENT' ) {
-							TESTER.log.fail(`${ Chalk.bgWhite.black(` ${ settings.name } `) } failed becasue it produced files but really shoudn’t`);
+				} else {
+					Fs.access(location, Fs.constants.R_OK, (error) => {
+						if (!error || error.code !== 'ENOENT') {
+							TESTER.log.fail(
+								`${Chalk.bgWhite.black(
+									` ${settings.name} `
+								)} failed becasue it produced files but really shoudn’t`
+							);
 
 							TESTER.PASS = false;
 
@@ -481,10 +485,7 @@ const TESTER = (() => { //constructor factory
 									},
 								},
 							});
-
-						}
-						else {
-
+						} else {
 							resolve({
 								fixture: {
 									hash: 'xxx',
@@ -493,13 +494,11 @@ const TESTER = (() => { //constructor factory
 									hash: 'xxx',
 								},
 							});
-
 						}
 					});
 				}
 			});
 		},
-
 
 		/**
 		 * Compare the output of a test against its fixture
@@ -509,102 +508,125 @@ const TESTER = (() => { //constructor factory
 		 *
 		 * @return {Promise object}  - The hash object of all files inside the fixture
 		 */
-		compare: ( settings, hashes ) => {
+		compare: (settings, hashes) => {
+			return new Promise((resolve, reject) => {
+				if (hashes.fixture.hash === hashes.result.hash) {
+					TESTER.log.pass(
+						`${Chalk.bgWhite.black(` ${settings.name} `)} passed`
+					); //yay
 
-			return new Promise( ( resolve, reject ) => {
-				if( hashes.fixture.hash === hashes.result.hash ) {
-					TESTER.log.pass(`${ Chalk.bgWhite.black(` ${ settings.name } `) } passed`); //yay
-
-					resolve( true );
-				}
-				else { //grr
+					resolve(true);
+				} else {
+					//grr
 					TESTER.PASS = false;
-					TESTER.log.fail(`${ Chalk.bgWhite.black(` ${ settings.name } `) } failed`);
+					TESTER.log.fail(
+						`${Chalk.bgWhite.black(` ${settings.name} `)} failed`
+					);
 
 					//flatten hash object
-					const fixture = flatten( hashes.fixture.files );
-					const result = flatten( hashes.result.files );
+					const fixture = flatten(hashes.fixture.files);
+					const result = flatten(hashes.result.files);
 
 					//iterate over fixture
-					for( const file of Object.keys( fixture ) ) {
-						const compare = result[ file ]; //get the hash from our result folder
-						delete result[ file ];          //remove this one so we can keep track of the ones that were not inside the fixture folder
+					for (const file of Object.keys(fixture)) {
+						const compare = result[file]; //get the hash from our result folder
+						delete result[file]; //remove this one so we can keep track of the ones that were not inside the fixture folder
 
-						if( compare === undefined ) {  //we couldn’t find this file inside the resulting folder
-							TESTER.log.error(`Missing ${ Chalk.yellow( file ) } file inside result folder`);
-						}
-						else {
+						if (compare === undefined) {
+							//we couldn’t find this file inside the resulting folder
+							TESTER.log.error(
+								`Missing ${Chalk.yellow(file)} file inside result folder`
+							);
+						} else {
 							const fileName = file.split('/');
 
-							if( fixture[ file ] !== compare && fileName[ fileName.length - 1 ] !== 'hash' ) { //we don’t want to compare folders
-								TESTER.log.error(`Difference inside ${ Chalk.yellow( settings.folder + file ) } file`);
+							if (
+								fixture[file] !== compare &&
+								fileName[fileName.length - 1] !== 'hash'
+							) {
+								//we don’t want to compare folders
+								TESTER.log.error(
+									`Difference inside ${Chalk.yellow(
+										settings.folder + file
+									)} file`
+								);
 							}
 						}
 					}
 
-					if( Object.keys( result ).length > 0 ) { //found files that have not been deleted yet
+					if (Object.keys(result).length > 0) {
+						//found files that have not been deleted yet
 						let files = [];
 
-						for( const file of Object.keys( result ) ) {
-							files.push( file ); //make ’em readable
+						for (const file of Object.keys(result)) {
+							files.push(file); //make ’em readable
 						}
 
-						TESTER.log.error(`Some new files not accounted for: ${ Chalk.yellow( files.join(', ') ) } inside the fixture folder`);
+						TESTER.log.error(
+							`Some new files not accounted for: ${Chalk.yellow(
+								files.join(', ')
+							)} inside the fixture folder`
+						);
 					}
 
-					resolve( false );
+					resolve(false);
 				}
 			});
 		},
 
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Log to console.log
-//
-// @method  info                       Log info
-//          @param   [text]  {string}  The sting you want to log
-//          @return  [ansi]            output
-//
-// @method  finished                   Log the finishing message
-//          @param   [text]  {string}  The sting you want to log
-//          @return  [ansi]            output
-//
-// @method  error                      Log errors
-//          @param   [text]  {string}  The sting you want to log
-//          @return  [ansi]            output
-//
-// @method  pass                       Log a pass
-//          @param   [text]  {string}  The sting you want to log
-//          @return  [ansi]            output
-//
-// @method  fail                       Log a fail
-//          @param   [text]  {string}  The sting you want to log
-//          @return  [ansi]            output
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+		// Log to console.log
+		//
+		// @method  info                       Log info
+		//          @param   [text]  {string}  The sting you want to log
+		//          @return  [ansi]            output
+		//
+		// @method  finished                   Log the finishing message
+		//          @param   [text]  {string}  The sting you want to log
+		//          @return  [ansi]            output
+		//
+		// @method  error                      Log errors
+		//          @param   [text]  {string}  The sting you want to log
+		//          @return  [ansi]            output
+		//
+		// @method  pass                       Log a pass
+		//          @param   [text]  {string}  The sting you want to log
+		//          @return  [ansi]            output
+		//
+		// @method  fail                       Log a fail
+		//          @param   [text]  {string}  The sting you want to log
+		//          @return  [ansi]            output
+		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 		log: {
-
-			info: ( text ) => {
-				console.log(`\n\n        ${ text }\u001b[1F`);
+			info: (text) => {
+				console.log(`\n\n        ${text}\u001b[1F`);
 			},
 
-			finished: ( text ) => {
-				console.log(`\n        ${ text }\n\n`);
+			finished: (text) => {
+				console.log(`\n        ${text}\n\n`);
 			},
 
-			error: ( text ) => {
-				console.error(`\n        ${ Chalk.red( text ) }\u001b[1F`);
+			error: (text) => {
+				console.error(`\n        ${Chalk.red(text)}\u001b[1F`);
 			},
 
-			pass: ( text ) => {
-				console.log(`${ Chalk.bgGreen.bold(`\n  OK  `) } ${ Chalk.bgGreen.white.bold(` ${ text }`) }\u001b[1F`);
+			pass: (text) => {
+				console.log(
+					`${Chalk.bgGreen.bold(`\n  OK  `)} ${Chalk.bgGreen.white.bold(
+						` ${text}`
+					)}\u001b[1F`
+				);
 			},
 
-			fail: ( text ) => {
-				console.error(`${ Chalk.bgRed.bold(`\n FAIL `) } ${ Chalk.bgRed.white.bold(` ${ text }`) }\u001b[1F`);
+			fail: (text) => {
+				console.error(
+					`${Chalk.bgRed.bold(`\n FAIL `)} ${Chalk.bgRed.white.bold(
+						` ${text}`
+					)}\u001b[1F`
+				);
 			},
 		},
-	}
+	};
 })();
-
 
 TESTER.init();

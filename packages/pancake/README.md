@@ -1,34 +1,29 @@
-Pancake
-=======
+# Pancake
 
-> Pancake flattens npm packages for GOLD Design System in to a pancake directory. 
+> Pancake flattens npm packages for GOLD Design System in to a pancake directory.
 
 Pancake is a dependency of `@gold.au` packages.
 
-Pancake runs on the `postinstall` hook of packages, for instance when running `npm install @gold.au/buttons` in your project, pancake will create a pancake directory in the root of your project containing the flattened assets. 
-   
+Pancake runs on the `postinstall` hook of packages, for instance when running `npm install @gold.au/buttons` in your project, pancake will create a pancake directory in the root of your project containing the flattened assets.
 
 ## Install
-    
+
 Install with npm:
-    
+
     npm install @gold.au/pancake
 
-Or install with Yarn: 
+Or install with Yarn:
 
     yarn add @gold.au/pancake --dev
-
 
 ## Requirements
 
 - npm version >= `~3.0.0`
 - A `package.json` file in your root (run `npm init --yes`)
 
-
 ## Settings
 
 Pancake comes with two different level of settings. Global settings can persist across projects and local settings that are project specific.
-
 
 ### Global settings
 
@@ -36,16 +31,15 @@ To change global settings run Pancake with the `--set` flag.
 
     npx pancake --set [settingName] [value]
 
-|     setting     |                 value                 |  default  |
-|-----------------|---------------------------------------|-----------|
-|     `npmOrg`    | This is the npm org scope             | `@gold.au` |
-|    `plugins`    | A switch to disable or enable plugins | `true`    |
-| `ignorePlugins` | An array of plugins to be ignored     | `[]`      |
+| setting         | value                                 | default    |
+| --------------- | ------------------------------------- | ---------- |
+| `npmOrg`        | This is the npm org scope             | `@gold.au` |
+| `plugins`       | A switch to disable or enable plugins | `true`     |
+| `ignorePlugins` | An array of plugins to be ignored     | `[]`       |
 
 Example:
 
     npx pancake --set npmOrg yourOrg
-
 
 ### Local settings
 
@@ -103,15 +97,14 @@ To change local settings all you have to do is include a `pancake` object into y
 
 To remove `js` you can set the value of `"name": false` and remove the values `minified`, `modules` and `location`.
 
-
 ## CLI
 
 You can display the help with `pancake --help`.
 
-
 ### Don’t save to package.json
+
 `-n`, `--nosave`  
-Type: `<flag>`  
+Type: `<flag>`
 
 The command will stop Pancake from merging your local settings, complete them with the defaults and save them into your `package.json`.
 This will sort-of shrink-wrap all settings in so you are completely reproducible.
@@ -121,10 +114,10 @@ You can also opt-out of this behavior by adding `"auds": { "auto-save": false }`
 npx pancake --nosave
 ```
 
-
 ### Overwrite npm org name
+
 `-o`, `--org`  
-Type: `<flag> [value]`  
+Type: `<flag> [value]`
 
 You can temporarily overwrite the npm org scope by suppling this flag. This can be useful for testing. Do make sure to use the [settings](#settings) for a
 permanent change.
@@ -133,10 +126,10 @@ permanent change.
 npx pancake --org @otherOrg
 ```
 
-
 ### Overwrite the plugin toggle
+
 `-p`, `--noplugins`  
-Type: `<flag>`  
+Type: `<flag>`
 
 You can temporarily disable all plugins. This is great for ci integration.
 
@@ -144,10 +137,10 @@ You can temporarily disable all plugins. This is great for ci integration.
 npx pancake --noplugins
 ```
 
-
 ### Overwrite the plugin ignore list
+
 `-i`, `--ignore`  
-Type: `<flag> [comma separated list]`  
+Type: `<flag> [comma separated list]`
 
 You can temporarily overwrite the list of plugins to be disabled.
 
@@ -155,16 +148,15 @@ You can temporarily overwrite the list of plugins to be disabled.
 npx pancake --ignore @gov.au/pancake-svg,@gov.au/pancake-js
 ```
 
-
 ### Verbose output
+
 `-v`, `--verbose`  
-Type: `<flag>`  
+Type: `<flag>`
 
 Run Pancake in verbose silly mode.
 
 ```shell
 npx pancake --verbose
 ```
-
 
 # };

@@ -23,7 +23,6 @@
 	},
 	"dependencies": {
 		"@gov.au/pancake": "~1",
-
 		"@gov.au/testmodule1": "^15.0.0"
 	},
 	"peerDependencies": {

@@ -6,16 +6,19 @@
  *
  **************************************************************************************************************************************************************/
 
-
-const { HighlightDiff, Headline, AddDeps, GetRemoteJson } = require( '../src/syrup' );
-
+const {
+	HighlightDiff,
+	Headline,
+	AddDeps,
+	GetRemoteJson,
+} = require('../src/syrup');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // testing exports
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 test('syrup - Should define all exported functions', () => {
-	expect( HighlightDiff ).toBeDefined();
-	expect( Headline ).toBeDefined();
-	expect( AddDeps ).toBeDefined();
-	expect( GetRemoteJson ).toBeDefined();
+	expect(HighlightDiff).toBeDefined();
+	expect(Headline).toBeDefined();
+	expect(AddDeps).toBeDefined();
+	expect(GetRemoteJson).toBeDefined();
 });

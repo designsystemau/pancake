@@ -10,12 +10,10 @@
 
 'use strict';
 
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Included modules
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const { Log, Style, ReadFile, WriteFile } = require( '@gold.au/pancake' );
-
+const { Log, Style, ReadFile, WriteFile } = require('@gold.au/pancake');
 
 /**
  * Get react file from module and write to disk
@@ -26,25 +24,25 @@ const { Log, Style, ReadFile, WriteFile } = require( '@gold.au/pancake' );
  *
  * @return {promise object}  - The js code either minified or bare bone
  */
-module.exports.HandleReact = ( from, to, tag ) => {
-	return new Promise( ( resolve, reject ) => {
-		ReadFile( from ) //read the module
-			.catch( error => {
-				Log.error(`Unable to read file ${ Style.yellow( from ) }`);
-				Log.error( error );
+module.exports.HandleReact = (from, to, tag) => {
+	return new Promise((resolve, reject) => {
+		ReadFile(from) //read the module
+			.catch((error) => {
+				Log.error(`Unable to read file ${Style.yellow(from)}`);
+				Log.error(error);
 
-				reject( error );
+				reject(error);
 			})
-			.then( ( code ) => WriteFile( to, code ) //write the generated content to file and return its promise
-					.catch( error => {
-						Log.error( error );
+			.then((code) =>
+				WriteFile(to, code) //write the generated content to file and return its promise
+					.catch((error) => {
+						Log.error(error);
 
-						reject( error );
+						reject(error);
 					})
-					.then( () => {
-						resolve( code );
-				})
+					.then(() => {
+						resolve(code);
+					})
 			);
 	});
 };
-
