@@ -1,5 +1,11 @@
 Syrup
 
+## 2.0.2
+
+### Patch Changes
+
+- 06fd78e: Updated settings to find components in gold DS
+
 ## 2.0.1
 
 ### Patch Changes
