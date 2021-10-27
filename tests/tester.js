@@ -437,7 +437,7 @@ const TESTER = (() => { //constructor factory
 		 * @return {Promise object}  - The hash object of all files inside the resulting files
 		 */
 		result: ( path, settings, fixture ) => {
-			const location = Path.normalize(`${ path }/${ settings.compare }/`);
+			const location = Path.normalize(`${ path }/_fixture/${ settings.compare }/`);
 
 			return new Promise( ( resolve, reject ) => {
 				if( !settings.empty ) {
