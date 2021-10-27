@@ -12,22 +12,25 @@
 
 'use strict';
 
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Dependencies
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const Path = require( 'path' );
-const Fs = require( 'fs' );
-
+const Path = require('path');
+const Fs = require('fs');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Module imports
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const { Log, Style, Loading, ReadFile, WriteFile } = require( '@gold.au/pancake' );
-const { HandleJS, MinifyAllJS } = require('./js' );
+const {
+	Log,
+	Style,
+	Loading,
+	ReadFile,
+	WriteFile,
+} = require('@gold.au/pancake');
+const { HandleJS, MinifyAllJS } = require('./js');
 
 Log.output = true; //this plugin assumes you run it through pancake
-
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Plugin export
@@ -43,13 +46,12 @@ Log.output = true; //this plugin assumes you run it through pancake
  *
  * @return {Promise object}  - Returns an object of the settings we want to save
  */
-module.exports.pancake = ( version, modules, settings, GlobalSettings, cwd ) => {
-	Loading.start( 'pancake-js', Log.verboseMode );
+module.exports.pancake = (version, modules, settings, GlobalSettings, cwd) => {
+	Loading.start('pancake-js', Log.verboseMode);
 
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Settings
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+	// Settings
+	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 	let SETTINGS = {
 		js: {
 			minified: true,
@@ -60,110 +62,122 @@ module.exports.pancake = ( version, modules, settings, GlobalSettings, cwd ) => 
 	};
 
 	//merging settings with host settings
-	Object.assign( SETTINGS.js, settings.js );
+	Object.assign(SETTINGS.js, settings.js);
 
-
-	return new Promise( ( resolve, reject ) => {
+	return new Promise((resolve, reject) => {
 		//some housekeeping
-		if( typeof version !== 'string' ) {
+		if (typeof version !== 'string') {
 			reject(
-				`Plugin pancake-js got a mismatch for the data that was passed to it! ${ Style.yellow(`version`) } was ${ Style.yellow( typeof version ) } ` +
-				`but should have been ${ Style.yellow(`string`) }`
+				`Plugin pancake-js got a mismatch for the data that was passed to it! ${Style.yellow(
+					`version`
+				)} was ${Style.yellow(typeof version)} ` +
+					`but should have been ${Style.yellow(`string`)}`
 			);
 		}
 
-		if( typeof modules !== 'object' ) {
+		if (typeof modules !== 'object') {
 			reject(
-				`Plugin pancake-js got a mismatch for the data that was passed to it! ${ Style.yellow(`modules`) } was ${ Style.yellow( typeof modules ) } ` +
-				`but should have been ${ Style.yellow(`object`) }`
+				`Plugin pancake-js got a mismatch for the data that was passed to it! ${Style.yellow(
+					`modules`
+				)} was ${Style.yellow(typeof modules)} ` +
+					`but should have been ${Style.yellow(`object`)}`
 			);
 		}
 
-		if( typeof settings !== 'object' ) {
+		if (typeof settings !== 'object') {
 			reject(
-				`Plugin pancake-js got a mismatch for the data that was passed to it! ${ Style.yellow(`settings`) } was ${ Style.yellow( typeof settings ) } ` +
-				`but should have been ${ Style.yellow(`object`) }`
+				`Plugin pancake-js got a mismatch for the data that was passed to it! ${Style.yellow(
+					`settings`
+				)} was ${Style.yellow(typeof settings)} ` +
+					`but should have been ${Style.yellow(`object`)}`
 			);
 		}
 
-		if( typeof cwd !== 'string' ) {
+		if (typeof cwd !== 'string') {
 			reject(
-				`Plugin pancake-js got a mismatch for the data that was passed to it! ${ Style.yellow(`cwd`) } was ${ Style.yellow( typeof cwd ) } ` +
-				`but should have been ${ Style.yellow(`string`) }`
+				`Plugin pancake-js got a mismatch for the data that was passed to it! ${Style.yellow(
+					`cwd`
+				)} was ${Style.yellow(typeof cwd)} ` +
+					`but should have been ${Style.yellow(`string`)}`
 			);
 		}
 
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Settings
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+		// Settings
+		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 		let compiledAll = []; //for collect all promises
 
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Iterate over each module
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-		for( const modulePackage of modules ) {
-			Log.verbose(`JS: Building ${ Style.yellow( modulePackage.name ) }`);
+		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+		// Iterate over each module
+		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+		for (const modulePackage of modules) {
+			Log.verbose(`JS: Building ${Style.yellow(modulePackage.name)}`);
 
 			//check if there are js files
 			let jsModulePath;
-			if( modulePackage.pancake['pancake-module'].js !== undefined ) {
-				jsModulePath = Path.normalize(`${ modulePackage.path }/${ modulePackage.pancake['pancake-module'].js.path }`);
+			if (modulePackage.pancake['pancake-module'].js !== undefined) {
+				jsModulePath = Path.normalize(
+					`${modulePackage.path}/${modulePackage.pancake['pancake-module'].js.path}`
+				);
 			}
 
-			if( !Fs.existsSync( jsModulePath ) ) {
-				Log.verbose(`JS: No js found in ${ Style.yellow( jsModulePath ) }`)
-			}
-			else {
-				Log.verbose(`JS: ${ Style.green('⌘') } Found Javascript files in ${ Style.yellow( jsModulePath ) }`);
+			if (!Fs.existsSync(jsModulePath)) {
+				Log.verbose(`JS: No js found in ${Style.yellow(jsModulePath)}`);
+			} else {
+				Log.verbose(
+					`JS: ${Style.green('⌘')} Found Javascript files in ${Style.yellow(
+						jsModulePath
+					)}`
+				);
 
-				const jsModuleToPath = Path.normalize(`${ cwd }/${ SETTINGS.js.location }/${ modulePackage.name.split('/')[ 1 ] }.js`);
+				const jsModuleToPath = Path.normalize(
+					`${cwd}/${SETTINGS.js.location}/${
+						modulePackage.name.split('/')[1]
+					}.js`
+				);
 
 				//compile js and write to file depending on settings
-				const jsPromise = HandleJS( jsModulePath, SETTINGS.js, jsModuleToPath, `${ modulePackage.name } v${ modulePackage.version }` )
-					.catch( error => {
-						Log.error( error );
+				const jsPromise = HandleJS(
+					jsModulePath,
+					SETTINGS.js,
+					jsModuleToPath,
+					`${modulePackage.name} v${modulePackage.version}`
+				).catch((error) => {
+					Log.error(error);
 				});
 
-				compiledAll.push( jsPromise ); //collect all js promises so we can save the SETTINGS.js.name file later
+				compiledAll.push(jsPromise); //collect all js promises so we can save the SETTINGS.js.name file later
 			}
 		}
 
-
-		if( modules.length < 1 ) {
-			Loading.stop( 'pancake-js', Log.verboseMode ); //stop loading animation
+		if (modules.length < 1) {
+			Loading.stop('pancake-js', Log.verboseMode); //stop loading animation
 
 			Log.info(`No pancake modules found 😬`);
-			resolve( SETTINGS );
-		}
-		else {
-
+			resolve(SETTINGS);
+		} else {
 			//write SETTINGS.js.name file
-			if( SETTINGS.js.name !== false ) {
+			if (SETTINGS.js.name !== false) {
 				compiledAll.push(
-					MinifyAllJS( version, compiledAll, SETTINGS.js, cwd )
-						.catch( error => {
-							Log.error( error );
+					MinifyAllJS(version, compiledAll, SETTINGS.js, cwd).catch((error) => {
+						Log.error(error);
 					})
 				);
 			}
 
 			//after all files have been compiled and written
-			Promise.all( compiledAll )
-				.catch( error => {
-					Loading.stop( 'pancake-js', Log.verboseMode ); //stop loading animation
+			Promise.all(compiledAll)
+				.catch((error) => {
+					Loading.stop('pancake-js', Log.verboseMode); //stop loading animation
 
-					Log.error(`Js plugin ran into an error: ${ error }`);
+					Log.error(`Js plugin ran into an error: ${error}`);
 				})
-				.then( () => {
+				.then(() => {
 					Log.ok('JS PLUGIN FINISHED');
 
-					Loading.stop( 'pancake-js', Log.verboseMode ); //stop loading animation
-					resolve( SETTINGS );
-			});
-
+					Loading.stop('pancake-js', Log.verboseMode); //stop loading animation
+					resolve(SETTINGS);
+				});
 		}
-
 	});
-}
+};

@@ -1,0 +1,7 @@
+.changeset
+.yarn
+lib/
+**/dist
+tests/*/_fixture/**
+tests/*/pancake/**
+tests/*/fixture/**

@@ -10,18 +10,15 @@
 
 'use strict';
 
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Dependencies
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const Request = require( 'request' );
-
+const Request = require('request');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Module imports
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const { Log, Style } = require( '@gold.au/pancake' );
-
+const { Log, Style } = require('@gold.au/pancake');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Exports
@@ -33,10 +30,10 @@ const { Log, Style } = require( '@gold.au/pancake' );
  *
  * @return {object}     - The parsed object of the json content
  */
-module.exports.GetRemoteJson = url => {
-	Log.verbose(`Getting json file from: ${ Style.yellow( url ) }`);
+module.exports.GetRemoteJson = (url) => {
+	Log.verbose(`Getting json file from: ${Style.yellow(url)}`);
 
-	return new Promise( ( resolve, reject ) => {
+	return new Promise((resolve, reject) => {
 		Request.get(
 			{
 				url: url,
@@ -44,22 +41,26 @@ module.exports.GetRemoteJson = url => {
 				headers: {
 					'User-Agent': 'pancake', //well, duh!
 				},
-			}, ( error, result, data ) => {
-				if( error ) {
-					Log.error( error );
+			},
+			(error, result, data) => {
+				if (error) {
+					Log.error(error);
 
-					if( error.code === 'ENOTFOUND' ) {
-						reject(`Unable to find the json file online. Make sure you’re online.`);
+					if (error.code === 'ENOTFOUND') {
+						reject(
+							`Unable to find the json file online. Make sure you’re online.`
+						);
+					} else {
+						reject(error);
 					}
-					else {
-						reject( error );
-					}
-				}
-				else if( result.statusCode !== 200 ) {
-					reject(`Request to ${ Style.yellow( url ) } returned: ${ Style.yellow( result.statusCode ) }`);
-				}
-				else {
-					resolve( data );
+				} else if (result.statusCode !== 200) {
+					reject(
+						`Request to ${Style.yellow(url)} returned: ${Style.yellow(
+							result.statusCode
+						)}`
+					);
+				} else {
+					resolve(data);
 				}
 			}
 		);

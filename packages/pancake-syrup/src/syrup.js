@@ -14,24 +14,22 @@
 
 'use strict';
 
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Dependencies
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const StripAnsi = require( 'strip-ansi' );
-const inquirer = require( 'inquirer' );
-const Path = require( 'path' );
-
+const StripAnsi = require('strip-ansi');
+const inquirer = require('inquirer');
+const Path = require('path');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Using this file to export the reusable items
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const { HighlightDiff, Headline } = require('./prettiness.js' );
-const { AddDeps } = require('./dependencies.js' );
-const { GetRemoteJson } = require( './json.js' );
+const { HighlightDiff, Headline } = require('./prettiness.js');
+const { AddDeps } = require('./dependencies.js');
+const { GetRemoteJson } = require('./json.js');
 
-
-module.exports = { //here, take a sword; for you may need it
+module.exports = {
+	//here, take a sword; for you may need it
 	HighlightDiff,
 	Headline,
 	AddDeps,

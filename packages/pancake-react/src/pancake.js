@@ -12,22 +12,25 @@
 
 'use strict';
 
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Dependencies
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const Path = require( 'path' );
-const Fs = require( 'fs' );
-
+const Path = require('path');
+const Fs = require('fs');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Module imports
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const { Log, Style, Loading, ReadFile, WriteFile } = require( '@gold.au/pancake' );
-const { HandleReact } = require( './react' );
+const {
+	Log,
+	Style,
+	Loading,
+	ReadFile,
+	WriteFile,
+} = require('@gold.au/pancake');
+const { HandleReact } = require('./react');
 
 Log.output = true; //this plugin assumes you run it through pancake
-
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Plugin export
@@ -43,13 +46,12 @@ Log.output = true; //this plugin assumes you run it through pancake
  *
  * @return {Promise object}  - Returns an object of the settings we want to save
  */
-module.exports.pancake = ( version, modules, settings, GlobalSettings, cwd ) => {
-	Loading.start( 'pancake-react', Log.verboseMode );
+module.exports.pancake = (version, modules, settings, GlobalSettings, cwd) => {
+	Loading.start('pancake-react', Log.verboseMode);
 
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Settings
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+	// Settings
+	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 	let SETTINGS = {
 		react: {
 			location: 'pancake/react/',
@@ -57,107 +59,121 @@ module.exports.pancake = ( version, modules, settings, GlobalSettings, cwd ) => 
 	};
 
 	//merging settings with host settings
-	Object.assign( SETTINGS.react, settings.react );
+	Object.assign(SETTINGS.react, settings.react);
 
-
-	return new Promise( ( resolve, reject ) => {
+	return new Promise((resolve, reject) => {
 		//some housekeeping
-		if( typeof version !== 'string' ) {
+		if (typeof version !== 'string') {
 			reject(
-				`Plugin pancake-react got a mismatch for the data that was passed to it! ${ Style.yellow(`version`) } was ${ Style.yellow( typeof version ) } ` +
-				`but should have been ${ Style.yellow(`string`) }`
+				`Plugin pancake-react got a mismatch for the data that was passed to it! ${Style.yellow(
+					`version`
+				)} was ${Style.yellow(typeof version)} ` +
+					`but should have been ${Style.yellow(`string`)}`
 			);
 		}
 
-		if( typeof modules !== 'object' ) {
+		if (typeof modules !== 'object') {
 			reject(
-				`Plugin pancake-react got a mismatch for the data that was passed to it! ${ Style.yellow(`modules`) } was ${ Style.yellow( typeof modules ) } ` +
-				`but should have been ${ Style.yellow(`object`) }`
+				`Plugin pancake-react got a mismatch for the data that was passed to it! ${Style.yellow(
+					`modules`
+				)} was ${Style.yellow(typeof modules)} ` +
+					`but should have been ${Style.yellow(`object`)}`
 			);
 		}
 
-		if( typeof settings !== 'object' ) {
+		if (typeof settings !== 'object') {
 			reject(
-				`Plugin pancake-react got a mismatch for the data that was passed to it! ${ Style.yellow(`settings`) } was ${ Style.yellow( typeof settings ) } ` +
-				`but should have been ${ Style.yellow(`object`) }`
+				`Plugin pancake-react got a mismatch for the data that was passed to it! ${Style.yellow(
+					`settings`
+				)} was ${Style.yellow(typeof settings)} ` +
+					`but should have been ${Style.yellow(`object`)}`
 			);
 		}
 
-		if( typeof cwd !== 'string' ) {
+		if (typeof cwd !== 'string') {
 			reject(
-				`Plugin pancake-react got a mismatch for the data that was passed to it! ${ Style.yellow(`cwd`) } was ${ Style.yellow( typeof cwd ) } ` +
-				`but should have been ${ Style.yellow(`string`) }`
+				`Plugin pancake-react got a mismatch for the data that was passed to it! ${Style.yellow(
+					`cwd`
+				)} was ${Style.yellow(typeof cwd)} ` +
+					`but should have been ${Style.yellow(`string`)}`
 			);
 		}
 
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Iterate over each module
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+		// Iterate over each module
+		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 		let reactModules = []; // for collect all promises
 
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Iterate over each module
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-		if( SETTINGS.react.location !== false ) {
-			for( const modulePackage of modules ) {
-				Log.verbose(`React: Building ${ Style.yellow( modulePackage.name ) }`);
+		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+		// Iterate over each module
+		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+		if (SETTINGS.react.location !== false) {
+			for (const modulePackage of modules) {
+				Log.verbose(`React: Building ${Style.yellow(modulePackage.name)}`);
 
 				//check if there are react files
 				let reactModulePath;
-				if( modulePackage.pancake['pancake-module'].react !== undefined ) {
-					reactModulePath = Path.normalize(`${ modulePackage.path }/${ modulePackage.pancake['pancake-module'].react.path }`);
+				if (modulePackage.pancake['pancake-module'].react !== undefined) {
+					reactModulePath = Path.normalize(
+						`${modulePackage.path}/${modulePackage.pancake['pancake-module'].react.path}`
+					);
 				}
 
-				if( !Fs.existsSync( reactModulePath ) ) {
-					Log.verbose(`React: No React found in ${ Style.yellow( reactModulePath ) }`)
-				}
-				else {
-					Log.verbose(`React: ${ Style.green('⌘') } Found React files in ${ Style.yellow( reactModulePath ) }`);
+				if (!Fs.existsSync(reactModulePath)) {
+					Log.verbose(
+						`React: No React found in ${Style.yellow(reactModulePath)}`
+					);
+				} else {
+					Log.verbose(
+						`React: ${Style.green('⌘')} Found React files in ${Style.yellow(
+							reactModulePath
+						)}`
+					);
 
-					const reactModuleToPath = Path.normalize(`${ cwd }/${ SETTINGS.react.location }/${ modulePackage.name.split('/')[ 1 ] }.js`);
+					const reactModuleToPath = Path.normalize(
+						`${cwd}/${SETTINGS.react.location}/${
+							modulePackage.name.split('/')[1]
+						}.js`
+					);
 
 					//move react file depending on settings
-					const reactPromise = HandleReact( reactModulePath, reactModuleToPath, `${ modulePackage.name } v${ modulePackage.version }` )
-						.catch( error => {
-							Log.error( error );
+					const reactPromise = HandleReact(
+						reactModulePath,
+						reactModuleToPath,
+						`${modulePackage.name} v${modulePackage.version}`
+					).catch((error) => {
+						Log.error(error);
 					});
 
-					reactModules.push( reactPromise );
+					reactModules.push(reactPromise);
 				}
 			}
 
-			if( modules.length < 1 ) {
-				Loading.stop( 'pancake-react', Log.verboseMode ); //stop loading animation
+			if (modules.length < 1) {
+				Loading.stop('pancake-react', Log.verboseMode); //stop loading animation
 
 				Log.info(`No pancake modules found 😬`);
-				resolve( SETTINGS );
-			}
-			else {
-
+				resolve(SETTINGS);
+			} else {
 				//after all files have been compiled and written
-				Promise.all( reactModules )
-					.catch( error => {
-						Loading.stop( 'pancake-react', Log.verboseMode ); //stop loading animation
+				Promise.all(reactModules)
+					.catch((error) => {
+						Loading.stop('pancake-react', Log.verboseMode); //stop loading animation
 
-						Log.error(`React plugin ran into an error: ${ error }`);
+						Log.error(`React plugin ran into an error: ${error}`);
 					})
-					.then( () => {
+					.then(() => {
 						Log.ok('REACT PLUGIN FINISHED');
 
-						Loading.stop( 'pancake-react', Log.verboseMode ); //stop loading animation
-						resolve( SETTINGS );
-				});
-
+						Loading.stop('pancake-react', Log.verboseMode); //stop loading animation
+						resolve(SETTINGS);
+					});
 			}
-		}
-		else {
+		} else {
 			Log.ok('REACT PLUGIN DISABLED');
-			Loading.stop( 'pancake-react', Log.verboseMode ); //stop loading animation
+			Loading.stop('pancake-react', Log.verboseMode); //stop loading animation
 
-			resolve( SETTINGS );
+			resolve(SETTINGS);
 		}
-
 	});
-}
+};

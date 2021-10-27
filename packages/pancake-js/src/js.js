@@ -10,18 +10,16 @@
 
 'use strict';
 
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Dependencies
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const UglifyJS  = require( 'uglify-js' );
-const Path = require( 'path' );
+const UglifyJS = require('uglify-js');
+const Path = require('path');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Included modules
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const { Log, Style, ReadFile, WriteFile } = require( '@gold.au/pancake' );
-
+const { Log, Style, ReadFile, WriteFile } = require('@gold.au/pancake');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Default export
@@ -34,30 +32,25 @@ const { Log, Style, ReadFile, WriteFile } = require( '@gold.au/pancake' );
  *
  * @return {string}      - The minified js code
  */
-const MinifyJS = ( js, file ) => {
-
+const MinifyJS = (js, file) => {
 	try {
-		const jsCode = UglifyJS.minify( js, { ie8: true } );
+		const jsCode = UglifyJS.minify(js, { ie8: true });
 
-		if( jsCode.error ) {
-			Log.error(`Unable to uglify js code for ${ Style.yellow( file ) }`);
-			Log.error( jsCode.error );
+		if (jsCode.error) {
+			Log.error(`Unable to uglify js code for ${Style.yellow(file)}`);
+			Log.error(jsCode.error);
 
 			return js;
-		}
-		else {
+		} else {
 			return jsCode.code;
 		}
-	}
-	catch( error ) {
-		Log.error(`Unable to uglify js code for ${ Style.yellow( file ) }`);
-		Log.error( error.message );
+	} catch (error) {
+		Log.error(`Unable to uglify js code for ${Style.yellow(file)}`);
+		Log.error(error.message);
 
 		return js;
 	}
-
 };
-
 
 /**
  * Get js from module, minify depending on settings and write to disk
@@ -69,48 +62,47 @@ const MinifyJS = ( js, file ) => {
  *
  * @return {promise object}  - The js code either minified or bare bone
  */
-module.exports.HandleJS = ( from, settings, to, tag ) => {
-	return new Promise( ( resolve, reject ) => {
-		ReadFile( from ) //read the module
-			.catch( error => {
-				Log.error(`Unable to read file ${ Style.yellow( from ) }`);
-				Log.error( error );
+module.exports.HandleJS = (from, settings, to, tag) => {
+	return new Promise((resolve, reject) => {
+		ReadFile(from) //read the module
+			.catch((error) => {
+				Log.error(`Unable to read file ${Style.yellow(from)}`);
+				Log.error(error);
 
-				reject( error );
+				reject(error);
 			})
-			.then( ( content ) => {
-
+			.then((content) => {
 				let code = '';
 
-				if( settings.minified ) { //minification = uglify code
-					code = MinifyJS( content, from );
+				if (settings.minified) {
+					//minification = uglify code
+					code = MinifyJS(content, from);
 
-					Log.verbose(`JS: Successfully uglified JS for ${ Style.yellow( from ) }`);
+					Log.verbose(`JS: Successfully uglified JS for ${Style.yellow(from)}`);
+				} else {
+					//no minification = just copy and rename
+					code = `\n\n${content}`;
 				}
-				else { //no minification = just copy and rename
-					code = `\n\n${ content }`;
-				}
 
-				code = `/*! ${ tag } */${ code }`;
+				code = `/*! ${tag} */${code}`;
 
-				if( settings.modules ) { //are we saving modules?
-					WriteFile( to, code ) //write the generated content to file and return its promise
-						.catch( error => {
-							Log.error( error );
+				if (settings.modules) {
+					//are we saving modules?
+					WriteFile(to, code) //write the generated content to file and return its promise
+						.catch((error) => {
+							Log.error(error);
 
-							reject( error );
+							reject(error);
 						})
-						.then( () => {
-							resolve( code );
-					});
+						.then(() => {
+							resolve(code);
+						});
+				} else {
+					resolve(code); //just return the promise
 				}
-				else {
-					resolve( code ); //just return the promise
-				}
-		});
+			});
 	});
 };
-
 
 /**
  * Minify all js modules together once their promises have resolved
@@ -122,39 +114,42 @@ module.exports.HandleJS = ( from, settings, to, tag ) => {
  *
  * @return {promise object}  - Returns true once the promise is resolved
  */
-module.exports.MinifyAllJS = ( version, allJS, settings, pkgPath ) => {
-	return new Promise( ( resolve, reject ) => {
-		Promise.all( allJS )
-			.catch( error => {
-				Log.error(`JS: Compiling JS ran into an error: ${ error }`);
+module.exports.MinifyAllJS = (version, allJS, settings, pkgPath) => {
+	return new Promise((resolve, reject) => {
+		Promise.all(allJS)
+			.catch((error) => {
+				Log.error(`JS: Compiling JS ran into an error: ${error}`);
 			})
-			.then( ( js ) => {
-				const Package = require( Path.normalize(`${ __dirname }/../package.json`) );
+			.then((js) => {
+				const Package = require(Path.normalize(`${__dirname}/../package.json`));
 
-				const locationJS = Path.normalize(`${ pkgPath }/${ settings.location }/${ settings.name }`);
+				const locationJS = Path.normalize(
+					`${pkgPath}/${settings.location}/${settings.name}`
+				);
 				let code = '';
 
-				if( settings.minified ) {
-					code = MinifyJS( js.join(`\n\n`), locationJS );
+				if (settings.minified) {
+					code = MinifyJS(js.join(`\n\n`), locationJS);
 
-					Log.verbose(`JS: Successfully uglified JS for ${ Style.yellow( locationJS ) }`);
-				}
-				else {
+					Log.verbose(
+						`JS: Successfully uglified JS for ${Style.yellow(locationJS)}`
+					);
+				} else {
 					code = '\n\n' + js.join(`\n\n`);
 				}
 
-				code = `/* PANCAKE v${ version } PANCAKE-JS v${ Package.version } */${ code }\n`;
+				code = `/* PANCAKE v${version} PANCAKE-JS v${Package.version} */${code}\n`;
 
-				WriteFile( locationJS, code ) //write file
-					.catch( error => {
-						Log.error( error );
+				WriteFile(locationJS, code) //write file
+					.catch((error) => {
+						Log.error(error);
 
-						reject( error );
+						reject(error);
 					})
-					.then( () => {
-						resolve( true );
-				});
-		});
+					.then(() => {
+						resolve(true);
+					});
+			});
 	});
 };
 

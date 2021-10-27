@@ -10,20 +10,17 @@
 
 'use strict';
 
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Dependencies
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const Path = require( 'path' );
-const Fs = require( 'fs' );
-
+const Path = require('path');
+const Fs = require('fs');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Included modules
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const { Log, Style } = require( './logging' );
-const { WriteFile }  = require('./files' );
-
+const { Log, Style } = require('./logging');
+const { WriteFile } = require('./files');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Default export
@@ -39,26 +36,30 @@ module.exports.Settings = {
 	 *
 	 * @return {object} - The settings object
 	 */
-	GetGlobal: ( root = __dirname ) => {
-		Log.verbose(`Getting global settings from ${ Style.yellow( Path.normalize(`${ root }/../settings.json`) ) }`);
+	GetGlobal: (root = __dirname) => {
+		Log.verbose(
+			`Getting global settings from ${Style.yellow(
+				Path.normalize(`${root}/../settings.json`)
+			)}`
+		);
 
 		let SETTINGS = {};
 
 		try {
-			SETTINGS = JSON.parse( Fs.readFileSync( Path.normalize(`${ root }/../settings.json`), `utf8` ) );
-		}
-		catch( error ) {
+			SETTINGS = JSON.parse(
+				Fs.readFileSync(Path.normalize(`${root}/../settings.json`), `utf8`)
+			);
+		} catch (error) {
 			Log.error(`Couldn’t read global settings :(`);
 
 			Log.space();
-			process.exit( 1 );
+			process.exit(1);
 		}
 
-		Log.verbose( Style.yellow( JSON.stringify( SETTINGS ) ) );
+		Log.verbose(Style.yellow(JSON.stringify(SETTINGS)));
 
 		return SETTINGS;
 	},
-
 
 	/**
 	 * Getting local setting from the host package.json file
@@ -67,24 +68,27 @@ module.exports.Settings = {
 	 *
 	 * @return {object}     - The settings object
 	 */
-	GetLocal: ( cwd ) => {
+	GetLocal: (cwd) => {
 		Log.verbose(`Getting local settings`);
 
 		let SETTINGS = {};
 
 		try {
-			SETTINGS = JSON.parse( Fs.readFileSync( Path.normalize(`${ cwd }/package.json`), `utf8` ) );
-		}
-		catch( error ) {
+			SETTINGS = JSON.parse(
+				Fs.readFileSync(Path.normalize(`${cwd}/package.json`), `utf8`)
+			);
+		} catch (error) {
 			Log.error(`Couldn’t read local settings :(`);
-			Log.error(`Make sure you have a package.json file availabe in the root of your project.`);
-			Log.error( error );
+			Log.error(
+				`Make sure you have a package.json file availabe in the root of your project.`
+			);
+			Log.error(error);
 
 			Log.space();
-			process.exit( 1 );
+			process.exit(1);
 		}
 
-		if( SETTINGS.pancake === undefined ) {
+		if (SETTINGS.pancake === undefined) {
 			SETTINGS.pancake = {};
 		}
 
@@ -93,17 +97,15 @@ module.exports.Settings = {
 			'auto-save': true,
 			plugins: true,
 			ignore: [],
-		}
+		};
 
 		//merging default settings with local package.json
-		SETTINGS.pancake = Object.assign( defaultSettings, SETTINGS.pancake );
+		SETTINGS.pancake = Object.assign(defaultSettings, SETTINGS.pancake);
 
-
-		Log.verbose( Style.yellow( JSON.stringify( SETTINGS.pancake ) ) );
+		Log.verbose(Style.yellow(JSON.stringify(SETTINGS.pancake)));
 
 		return SETTINGS.pancake;
 	},
-
 
 	/**
 	 * Writing new global settings to the settings.json file
@@ -113,41 +115,42 @@ module.exports.Settings = {
 	 *
 	 * @return {object}          - The settings object with the new setting
 	 */
-	SetGlobal: ( root, SETTINGS, ...items ) => {
+	SetGlobal: (root, SETTINGS, ...items) => {
 		Log.info(`PANCAKE SAVING DEFAULT SETTING`);
 
-		const setting = items[ 0 ];
-		const value = items.splice( 1 );
+		const setting = items[0];
+		const value = items.splice(1);
 
-		if( SETTINGS[ setting ] !== undefined ) {
+		if (SETTINGS[setting] !== undefined) {
 			//setting new value
-			if( typeof SETTINGS[ setting ] === 'object' ) {
-				SETTINGS[ setting ].push( ...value );
+			if (typeof SETTINGS[setting] === 'object') {
+				SETTINGS[setting].push(...value);
 			}
 
-			if( typeof SETTINGS[ setting ] === 'boolean' ) {
-				SETTINGS[ setting ] = ( value === "true" );
+			if (typeof SETTINGS[setting] === 'boolean') {
+				SETTINGS[setting] = value === 'true';
 			}
 
-			if( typeof SETTINGS[ setting ] === 'string' ) {
-				SETTINGS[ setting ] = value.toString();
+			if (typeof SETTINGS[setting] === 'string') {
+				SETTINGS[setting] = value.toString();
 			}
 
 			try {
-				Fs.writeFileSync( Path.normalize(`${ root }/../settings.json`), JSON.stringify( SETTINGS, null, '\t' ), 'utf8' );
+				Fs.writeFileSync(
+					Path.normalize(`${root}/../settings.json`),
+					JSON.stringify(SETTINGS, null, '\t'),
+					'utf8'
+				);
 
-				Log.ok(`Value for ${ Style.yellow( setting ) } saved`);
-			}
-			catch( error ) {
+				Log.ok(`Value for ${Style.yellow(setting)} saved`);
+			} catch (error) {
 				Log.error(`Saving settings failed`);
-				Log.error( error );
+				Log.error(error);
 			}
-		}
-		else {
-			Log.error(`Setting ${ Style.yellow( setting ) } not found`);
+		} else {
+			Log.error(`Setting ${Style.yellow(setting)} not found`);
 		}
 	},
-
 
 	/**
 	 * Writing local settings to the package.json file
@@ -157,56 +160,51 @@ module.exports.Settings = {
 	 *
 	 * @return {Promise object}  - The settings object with the new setting
 	 */
-	SetLocal: ( SETTINGS, pkgPath ) => {
+	SetLocal: (SETTINGS, pkgPath) => {
 		Log.info(`PANCAKE SAVING LOCAL SETTINGS`);
 
-		return new Promise( ( resolve, reject ) => {
-
-			const PackagePath = Path.normalize(`${ pkgPath }/package.json`);
+		return new Promise((resolve, reject) => {
+			const PackagePath = Path.normalize(`${pkgPath}/package.json`);
 			let PKGsource;
 			let PKG;
 
 			try {
-				PKGsource = Fs.readFileSync( PackagePath, `utf8` );
-				PKG = JSON.parse( PKGsource );
+				PKGsource = Fs.readFileSync(PackagePath, `utf8`);
+				PKG = JSON.parse(PKGsource);
 
-				Log.verbose(`Read settings at ${ Style.yellow( PackagePath ) }`);
-			}
-			catch( error ) {
-				Log.verbose(`No package.json found at ${ Style.yellow( PackagePath ) }`);
+				Log.verbose(`Read settings at ${Style.yellow(PackagePath)}`);
+			} catch (error) {
+				Log.verbose(`No package.json found at ${Style.yellow(PackagePath)}`);
 			}
 
 			//only save stuff if we have a package.json file to write to
-			if( PKGsource.length > 0 ) {
-
+			if (PKGsource.length > 0) {
 				//detect indentation
 				let _isSpaces;
 
 				let indentation = 2; //default indentation even though you all should be using tabs for indentation!
 				try {
 					const PKGlines = PKGsource.split('\n');
-					_isSpaces = PKGlines[ 1 ].startsWith('  ');
-				}
-				catch( error ) {
+					_isSpaces = PKGlines[1].startsWith('  ');
+				} catch (error) {
 					_isSpaces = true; //buuuhhhhhh 👎
 				}
 
-				if( !_isSpaces ) {
+				if (!_isSpaces) {
 					indentation = '\t'; //here we go!
 				}
 
 				PKG.pancake = SETTINGS; //set our settings
 
-				WriteFile( PackagePath, JSON.stringify( PKG, null, indentation ) ) //write to package.json
-					.catch( error => {
-						Log.error( error );
+				WriteFile(PackagePath, JSON.stringify(PKG, null, indentation)) //write to package.json
+					.catch((error) => {
+						Log.error(error);
 
-						reject( error );
+						reject(error);
 					})
-					.then( written => {
-						resolve( SETTINGS );
-				});
-
+					.then((written) => {
+						resolve(SETTINGS);
+					});
 			}
 		});
 	},

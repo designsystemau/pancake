@@ -1,5 +1,4 @@
-Pancake
-=======
+# Pancake
 
 > Pancake is a tool to make working with npm on the front end easy and sweet.
 
@@ -9,18 +8,17 @@ Pancake
 
 Pancake will check your `"peerDependencies"` for conflicts and comes with plugins to compile the contents of your modules for you and lists all available modules for you to select and install.
 
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+---
 
 ## Getting started
 
-Pancake comes installed with GOLD Design System components. It can be configured for each project in the `pancake` configuration within package.json. See more information about Settings at [`@gold.au/pancake` README](packages/pancake/README.md).  
+Pancake comes installed with GOLD Design System components. It can be configured for each project in the `pancake` configuration within package.json. See more information about Settings at [`@gold.au/pancake` README](packages/pancake/README.md).
 
 If you have issues with using SASS globals in a ReactJS project, please check out the [Design System React starter repo](https://github.com/govau/design-system-starter-react) for an example.
 
 **[⬆ back to top](#contents)**
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+---
 
 ## Reference
 
@@ -158,10 +156,9 @@ peer dependency and pancake can check if you have conflicts.
 
 Now you’re ready to publish your modules and start using Pancake.
 
-
 **[⬆ back to top](#contents)**
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+---
 
 ## Taste / Tests
 
@@ -171,21 +168,24 @@ We have published four test modules in our scoped npm org to test interdependenc
 Find below a list of what is inside each version:
 
 **@gov.au/testmodule1**
-- ![Testmodule1 version](https://img.shields.io/npm/v/@gov.au/testmodule1.svg?label=version&colorA=313131&colorB=1B7991)  
+
+- ![Testmodule1 version](https://img.shields.io/npm/v/@gov.au/testmodule1.svg?label=version&colorA=313131&colorB=1B7991)
 
 **@gov.au/testmodule2**
-- ![Testmodule2 version](https://img.shields.io/npm/v/@gov.au/testmodule2.svg?label=version&colorA=313131&colorB=1B7991)  
-	- └── `@gov.au/testmodule1`: `^15.0.0`
+
+- ![Testmodule2 version](https://img.shields.io/npm/v/@gov.au/testmodule2.svg?label=version&colorA=313131&colorB=1B7991)
+  - └── `@gov.au/testmodule1`: `^15.0.0`
 
 **@gov.au/testmodule3**
-- ![Testmodule3 version](https://img.shields.io/npm/v/@gov.au/testmodule3.svg?label=version&colorA=313131&colorB=1B7991)  
-	- ├── `@gov.au/testmodule1`: `^15.0.0`
-	- └── `@gov.au/testmodule2`: `^19.0.0`
+
+- ![Testmodule3 version](https://img.shields.io/npm/v/@gov.au/testmodule3.svg?label=version&colorA=313131&colorB=1B7991)
+  - ├── `@gov.au/testmodule1`: `^15.0.0`
+  - └── `@gov.au/testmodule2`: `^19.0.0`
 
 **@gov.au/testmodule4**
-- ![Testmodule4 version](https://img.shields.io/npm/v/@gov.au/testmodule4.svg?label=version&colorA=313131&colorB=1B7991)  
-	- └── `@gov.au/testmodule1`: `^15.0.0`
 
+- ![Testmodule4 version](https://img.shields.io/npm/v/@gov.au/testmodule4.svg?label=version&colorA=313131&colorB=1B7991)
+  - └── `@gov.au/testmodule1`: `^15.0.0`
 
 ### Software tests
 
@@ -213,8 +213,6 @@ Pancake has been tested with Ubuntu 16.04, Mac OS 10.11, 10.12 and Windows 10 al
 - node `v7.6.0`
 - node `v10.0.0`
 
-
 **[⬆ back to top](#contents)**
-
 
 # };

@@ -33,3 +33,6 @@ jobs:
 
       - name: Unit tests
         run: yarn test:unit-test
+
+      - name: Formatting
+        run: yarn test:prettier

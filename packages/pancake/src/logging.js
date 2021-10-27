@@ -10,13 +10,11 @@
 
 'use strict';
 
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Dependencies
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // const Path = require( 'path' );
 // const Fs = require( 'fs' );
-
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Ansi escape color codes
@@ -28,7 +26,6 @@
  * @type {Object}
  */
 const Style = {
-
 	/**
 	 * Parse ansi code while making sure we can nest colors
 	 *
@@ -38,13 +35,14 @@ const Style = {
 	 *
 	 * @return {string}       - The escaped text
 	 */
-	parse: ( text, start, end = `39m` ) => {
-		if( text !== undefined ) {
-			const replace = new RegExp( `\\u001b\\[${ end }`, 'g' ); //find any resets so we can nest styles
+	parse: (text, start, end = `39m`) => {
+		if (text !== undefined) {
+			const replace = new RegExp(`\\u001b\\[${end}`, 'g'); //find any resets so we can nest styles
 
-			return `\u001B[${ start }${ text.toString().replace( replace, `\u001B[${ start }` ) }\u001b[${ end }`;
-		}
-		else {
+			return `\u001B[${start}${text
+				.toString()
+				.replace(replace, `\u001B[${start}`)}\u001b[${end}`;
+		} else {
 			return ``;
 		}
 	},
@@ -56,7 +54,7 @@ const Style = {
 	 *
 	 * @return {string}      - The string with opening and closing ansi escape color codes
 	 */
-	black: text => Style.parse( text, `30m` ),
+	black: (text) => Style.parse(text, `30m`),
 
 	/**
 	 * Style a string with ansi escape codes
@@ -65,7 +63,7 @@ const Style = {
 	 *
 	 * @return {string}      - The string with opening and closing ansi escape color codes
 	 */
-	red: text => Style.parse( text, `31m` ),
+	red: (text) => Style.parse(text, `31m`),
 
 	/**
 	 * Style a string with ansi escape codes
@@ -74,7 +72,7 @@ const Style = {
 	 *
 	 * @return {string}      - The string with opening and closing ansi escape color codes
 	 */
-	green: text => Style.parse( text, `32m` ),
+	green: (text) => Style.parse(text, `32m`),
 
 	/**
 	 * Style a string with ansi escape codes
@@ -83,7 +81,7 @@ const Style = {
 	 *
 	 * @return {string}      - The string with opening and closing ansi escape color codes
 	 */
-	yellow: text => Style.parse( text, `33m` ),
+	yellow: (text) => Style.parse(text, `33m`),
 
 	/**
 	 * Style a string with ansi escape codes
@@ -92,7 +90,7 @@ const Style = {
 	 *
 	 * @return {string}      - The string with opening and closing ansi escape color codes
 	 */
-	blue: text => Style.parse( text, `34m` ),
+	blue: (text) => Style.parse(text, `34m`),
 
 	/**
 	 * Style a string with ansi escape codes
@@ -101,7 +99,7 @@ const Style = {
 	 *
 	 * @return {string}      - The string with opening and closing ansi escape color codes
 	 */
-	magenta: text => Style.parse( text, `35m` ),
+	magenta: (text) => Style.parse(text, `35m`),
 
 	/**
 	 * Style a string with ansi escape codes
@@ -110,7 +108,7 @@ const Style = {
 	 *
 	 * @return {string}      - The string with opening and closing ansi escape color codes
 	 */
-	cyan: text => Style.parse( text, `36m` ),
+	cyan: (text) => Style.parse(text, `36m`),
 
 	/**
 	 * Style a string with ansi escape codes
@@ -119,7 +117,7 @@ const Style = {
 	 *
 	 * @return {string}      - The string with opening and closing ansi escape color codes
 	 */
-	white: text => Style.parse( text, `37m` ),
+	white: (text) => Style.parse(text, `37m`),
 
 	/**
 	 * Style a string with ansi escape codes
@@ -128,7 +126,7 @@ const Style = {
 	 *
 	 * @return {string}      - The string with opening and closing ansi escape color codes
 	 */
-	gray: text => Style.parse( text, `90m` ),
+	gray: (text) => Style.parse(text, `90m`),
 
 	/**
 	 * Style a string with ansi escape codes
@@ -137,10 +135,8 @@ const Style = {
 	 *
 	 * @return {string}      - The string with opening and closing ansi escape color codes
 	 */
-	bold: text => Style.parse( text, `1m`, `22m` ),
-
+	bold: (text) => Style.parse(text, `1m`, `22m`),
 };
-
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Logging prettiness
@@ -152,23 +148,25 @@ const Style = {
  */
 const Log = {
 	verboseMode: false, //verbose flag
-	output: false,      //have we outputted something yet?
-	hasError: false,    //let’s assume the best
+	output: false, //have we outputted something yet?
+	hasError: false, //let’s assume the best
 
 	/**
 	 * Log an error
 	 *
 	 * @param  {string}  text - The text you want to log with the error
 	 */
-	error: ( text ) => {
-		if( !Log.output ) { //if we haven’t printed anything yet
-			Log.space();      //only then we add an empty line on the top
+	error: (text) => {
+		if (!Log.output) {
+			//if we haven’t printed anything yet
+			Log.space(); //only then we add an empty line on the top
 		}
 
 		Loading.stop(); //stop any animations first
 
-		if( !Log.hasError ) {
-			const messages = [ //because errors don’t have to be boring!
+		if (!Log.hasError) {
+			const messages = [
+				//because errors don’t have to be boring!
 				`Uh oh`,
 				`Oh no`,
 				`Sorry`,
@@ -210,15 +208,29 @@ const Log = {
 				`Crickey`,
 			];
 
-			const message = messages.sort( () => 0.5 - Math.random() )[0];
+			const message = messages.sort(() => 0.5 - Math.random())[0];
 
-			console.log( Style.red(`                         ${  `/`.repeat( message.length + 6 )  }`) );
-			console.log( Style.red(`                        +${ `-`.repeat( message.length + 4 ) }+/`) );
-			console.log( Style.red(`            (っ˘̩╭╮˘̩)っ  |  `) + Style.bold( Style.red( message ) ) + Style.red(`  |/`) ); //we need something big to help npms error system
-			console.log( Style.red(`                        +${ `-`.repeat( message.length + 4 ) }+`) + `\n` );
+			console.log(
+				Style.red(`                         ${`/`.repeat(message.length + 6)}`)
+			);
+			console.log(
+				Style.red(
+					`                        +${`-`.repeat(message.length + 4)}+/`
+				)
+			);
+			console.log(
+				Style.red(`            (っ˘̩╭╮˘̩)っ  |  `) +
+					Style.bold(Style.red(message)) +
+					Style.red(`  |/`)
+			); //we need something big to help npms error system
+			console.log(
+				Style.red(
+					`                        +${`-`.repeat(message.length + 4)}+`
+				) + `\n`
+			);
 		}
 
-		console.error(`🔥  ${ Style.red(`ERROR:   ${ text }`) }`);
+		console.error(`🔥  ${Style.red(`ERROR:   ${text}`)}`);
 
 		Log.output = true; //now we have written something out
 		Log.hasError = true;
@@ -229,13 +241,13 @@ const Log = {
 	 *
 	 * @param  {string}  text - The text you want to log
 	 */
-	info: ( text ) => {
-		if( !Log.output ) {
+	info: (text) => {
+		if (!Log.output) {
 			Log.space();
 		}
 
 		Loading.pause();
-		console.info(`🔔  INFO:    ${ text }`);
+		console.info(`🔔  INFO:    ${text}`);
 		Loading.resume();
 
 		Log.output = true;
@@ -246,13 +258,13 @@ const Log = {
 	 *
 	 * @param  {string}  text - The text you want to log
 	 */
-	ok: ( text ) => {
-		if( !Log.output ) {
+	ok: (text) => {
+		if (!Log.output) {
 			Log.space();
 		}
 
 		Loading.pause();
-		console.info(`👍  ${ Style.green(`OK:`) }      ${ Style.green( text ) }`);
+		console.info(`👍  ${Style.green(`OK:`)}      ${Style.green(text)}`);
 		Loading.resume();
 
 		Log.output = true;
@@ -263,13 +275,13 @@ const Log = {
 	 *
 	 * @param  {string}  text - The text you want to log
 	 */
-	done: ( text ) => {
-		if( !Log.output ) {
+	done: (text) => {
+		if (!Log.output) {
 			Log.space();
 		}
 
 		Loading.stop();
-		console.info(`🚀           ${ Style.green( Style.bold( text ) ) }`);
+		console.info(`🚀           ${Style.green(Style.bold(text))}`);
 
 		Log.output = true;
 	},
@@ -280,13 +292,13 @@ const Log = {
 	 * @param  {string}  text    - The text you want to log
 	 * @param  {boolean} verbose - Verbose flag either undefined or true
 	 */
-	verbose: ( text ) => {
-		if( Log.verboseMode ) {
-			if( !Log.output ) {
+	verbose: (text) => {
+		if (Log.verboseMode) {
+			if (!Log.output) {
 				Log.space();
 			}
 
-			console.info(`😬  ${ Style.gray(`VERBOSE: ${ text }`) }`);
+			console.info(`😬  ${Style.gray(`VERBOSE: ${text}`)}`);
 			Log.output = true;
 		}
 	},
@@ -298,7 +310,6 @@ const Log = {
 		console.log(`\n`);
 	},
 };
-
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Ansi loading animation
@@ -312,45 +323,45 @@ const Log = {
  * @return {object} - Object with methods
  */
 const Loading = (() => {
-
-	let sequence = [ //the sequence of all animation frame
+	let sequence = [
+		//the sequence of all animation frame
 		//pancake loading animation
-		Style.gray(`            ( ^-^)${ Style.yellow(`旦`) }                 `),
-		Style.gray(`             ( ^-^)${ Style.yellow(`旦`) }                `),
-		Style.gray(`              ( ^-^)${ Style.yellow(`旦`) }               `),
-		Style.gray(`               ( ^-^)${ Style.yellow(`旦`) }              `),
-		Style.gray(`                ( ^-^)${ Style.yellow(`旦`) }             `),
-		Style.gray(`                 ( ^-^)${ Style.yellow(`旦`) }            `),
-		Style.gray(`                  ( ^-^)${ Style.yellow(`旦`) }           `),
-		Style.gray(`                   ( ^-^)${ Style.yellow(`旦`) }          `),
-		Style.gray(`                    ( ^-^)${ Style.yellow(`旦`) }         `),
-		Style.gray(`                     ( ^-^)${ Style.yellow(`旦`) }        `),
-		Style.gray(`                      ( ^-^)${ Style.yellow(`旦`) }       `),
-		Style.gray(`                       ( ^-^)${ Style.yellow(`旦`) }      `),
-		Style.gray(`                        ( ^-^)${ Style.yellow(`旦`) }     `),
-		Style.gray(`                         ( ^-^)${ Style.yellow(`旦`) }    `),
-		Style.gray(`                          ( ^-^)${ Style.yellow(`旦`) }   `),
-		Style.gray(`                           ( ^-^)${ Style.yellow(`旦`) }  `),
-		Style.gray(`                            ( ^-^)${ Style.yellow(`旦`) } `),
-		Style.gray(`                            ( ^-^)${ Style.yellow(`旦`) } `),
-		Style.gray(`                             ( ^-^)${ Style.yellow(`旦`) }`),
-		Style.gray(`                            ${ Style.yellow(`旦`) }(^-^ ) `),
-		Style.gray(`                           ${ Style.yellow(`旦`) }(^-^ )  `),
-		Style.gray(`                          ${ Style.yellow(`旦`) }(^-^ )   `),
-		Style.gray(`                         ${ Style.yellow(`旦`) }(^-^ )    `),
-		Style.gray(`                        ${ Style.yellow(`旦`) }(^-^ )     `),
-		Style.gray(`                       ${ Style.yellow(`旦`) }(^-^ )      `),
-		Style.gray(`                      ${ Style.yellow(`旦`) }(^-^ )       `),
-		Style.gray(`                     ${ Style.yellow(`旦`) }(^-^ )        `),
-		Style.gray(`                    ${ Style.yellow(`旦`) }(^-^ )         `),
-		Style.gray(`                   ${ Style.yellow(`旦`) }(^-^ )          `),
-		Style.gray(`                  ${ Style.yellow(`旦`) }(^-^ )           `),
-		Style.gray(`                 ${ Style.yellow(`旦`) }(^-^ )            `),
-		Style.gray(`                ${ Style.yellow(`旦`) }(^-^ )             `),
-		Style.gray(`               ${ Style.yellow(`旦`) }(^-^ )              `),
-		Style.gray(`              ${ Style.yellow(`旦`) }(^-^ )               `),
-		Style.gray(`             ${ Style.yellow(`旦`) }(^-^ )                `),
-		Style.gray(`            ${ Style.yellow(`旦`) }(^-^ )                 `),
+		Style.gray(`            ( ^-^)${Style.yellow(`旦`)}                 `),
+		Style.gray(`             ( ^-^)${Style.yellow(`旦`)}                `),
+		Style.gray(`              ( ^-^)${Style.yellow(`旦`)}               `),
+		Style.gray(`               ( ^-^)${Style.yellow(`旦`)}              `),
+		Style.gray(`                ( ^-^)${Style.yellow(`旦`)}             `),
+		Style.gray(`                 ( ^-^)${Style.yellow(`旦`)}            `),
+		Style.gray(`                  ( ^-^)${Style.yellow(`旦`)}           `),
+		Style.gray(`                   ( ^-^)${Style.yellow(`旦`)}          `),
+		Style.gray(`                    ( ^-^)${Style.yellow(`旦`)}         `),
+		Style.gray(`                     ( ^-^)${Style.yellow(`旦`)}        `),
+		Style.gray(`                      ( ^-^)${Style.yellow(`旦`)}       `),
+		Style.gray(`                       ( ^-^)${Style.yellow(`旦`)}      `),
+		Style.gray(`                        ( ^-^)${Style.yellow(`旦`)}     `),
+		Style.gray(`                         ( ^-^)${Style.yellow(`旦`)}    `),
+		Style.gray(`                          ( ^-^)${Style.yellow(`旦`)}   `),
+		Style.gray(`                           ( ^-^)${Style.yellow(`旦`)}  `),
+		Style.gray(`                            ( ^-^)${Style.yellow(`旦`)} `),
+		Style.gray(`                            ( ^-^)${Style.yellow(`旦`)} `),
+		Style.gray(`                             ( ^-^)${Style.yellow(`旦`)}`),
+		Style.gray(`                            ${Style.yellow(`旦`)}(^-^ ) `),
+		Style.gray(`                           ${Style.yellow(`旦`)}(^-^ )  `),
+		Style.gray(`                          ${Style.yellow(`旦`)}(^-^ )   `),
+		Style.gray(`                         ${Style.yellow(`旦`)}(^-^ )    `),
+		Style.gray(`                        ${Style.yellow(`旦`)}(^-^ )     `),
+		Style.gray(`                       ${Style.yellow(`旦`)}(^-^ )      `),
+		Style.gray(`                      ${Style.yellow(`旦`)}(^-^ )       `),
+		Style.gray(`                     ${Style.yellow(`旦`)}(^-^ )        `),
+		Style.gray(`                    ${Style.yellow(`旦`)}(^-^ )         `),
+		Style.gray(`                   ${Style.yellow(`旦`)}(^-^ )          `),
+		Style.gray(`                  ${Style.yellow(`旦`)}(^-^ )           `),
+		Style.gray(`                 ${Style.yellow(`旦`)}(^-^ )            `),
+		Style.gray(`                ${Style.yellow(`旦`)}(^-^ )             `),
+		Style.gray(`               ${Style.yellow(`旦`)}(^-^ )              `),
+		Style.gray(`              ${Style.yellow(`旦`)}(^-^ )               `),
+		Style.gray(`             ${Style.yellow(`旦`)}(^-^ )                `),
+		Style.gray(`            ${Style.yellow(`旦`)}(^-^ )                 `),
 
 		//old style loading animation
 		// Style.gray(`            ${ Style.yellow('*') } • • • •`),
@@ -364,66 +375,66 @@ const Loading = (() => {
 		// Style.gray(`            ${ Style.yellow('*') } • • • •`),
 	];
 
-	let index = 0;    //the current index of the animation
-	let timer = {};   //the setInterval object
-	let speed = 80;  //the speed in which to animate
+	let index = 0; //the current index of the animation
+	let timer = {}; //the setInterval object
+	let speed = 80; //the speed in which to animate
 
 	return {
 		running: {},
 
-		start: ( plugin = 'pancake', verbose = Log.verboseMode ) => {
-			if( !verbose ) {
-				clearInterval( timer ); //stop any possible parallel loaders
+		start: (plugin = 'pancake', verbose = Log.verboseMode) => {
+			if (!verbose) {
+				clearInterval(timer); //stop any possible parallel loaders
 
-				Loading.running[ plugin ] = true;
+				Loading.running[plugin] = true;
 
-				process.stdout.write(`${ sequence[ index ] }`); //print the first frame
+				process.stdout.write(`${sequence[index]}`); //print the first frame
 
-				timer = setInterval(() => { //animate
+				timer = setInterval(() => {
+					//animate
 					process.stdout.write('\r\x1b[K'); //move cursor to beginning of line and clean line
 
-					index = ( index < sequence.length - 1 ) ? index + 1 : 0;
+					index = index < sequence.length - 1 ? index + 1 : 0;
 
-					process.stdout.write( sequence[ index ] ); //print
-				}, speed );
+					process.stdout.write(sequence[index]); //print
+				}, speed);
 			}
 		},
 
-		stop: ( plugin = 'pancake', verbose = Log.verboseMode ) => {
-			if( !verbose ) {
-				delete Loading.running[ plugin ];
+		stop: (plugin = 'pancake', verbose = Log.verboseMode) => {
+			if (!verbose) {
+				delete Loading.running[plugin];
 
-				if( Object.keys( Loading.running ).length === 0 ) {
-					clearInterval( timer );             //stop interval
+				if (Object.keys(Loading.running).length === 0) {
+					clearInterval(timer); //stop interval
 					process.stdout.write('\r\r\x1b[K'); //clear screen
 				}
 			}
 		},
 
-		pause: ( verbose = Log.verboseMode ) => {
-			if( !verbose ) {
-				clearInterval( timer );             //stop interval
+		pause: (verbose = Log.verboseMode) => {
+			if (!verbose) {
+				clearInterval(timer); //stop interval
 				process.stdout.write('\r\r\x1b[K'); //clear screen
 			}
 		},
 
-		resume: ( verbose = Log.verboseMode ) => {
-			if( !verbose ) {
-				if( Object.keys( Loading.running ).length > 0 ) {
-					clearInterval( timer ); //stop any possible parallel loaders
+		resume: (verbose = Log.verboseMode) => {
+			if (!verbose) {
+				if (Object.keys(Loading.running).length > 0) {
+					clearInterval(timer); //stop any possible parallel loaders
 
-					timer = setInterval(() => { //animate
+					timer = setInterval(() => {
+						//animate
 						process.stdout.write('\r\x1b[K'); //move cursor to beginning of line and clean line
-						index = ( index < sequence.length - 1 ) ? index + 1 : 0;
-						process.stdout.write( sequence[ index ] ); //print
-					}, speed );
-
+						index = index < sequence.length - 1 ? index + 1 : 0;
+						process.stdout.write(sequence[index]); //print
+					}, speed);
 				}
 			}
 		},
 	};
 })();
-
 
 module.exports.Style = Style;
 module.exports.Loading = Loading;

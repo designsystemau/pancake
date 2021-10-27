@@ -19,9 +19,7 @@
 	],
 	"scripts": {
 		"postinstall": "pancake -v",
-
 		"test": "node ../../scripts/a11y.js",
-
 		"build": "node ../../scripts/helper.js precompile compile",
 		"watch:sass": "npm run build && onchange 'src/sass/*.scss' 'tests/site/*.scss' -- npm run build",
 		"serve": "browser-sync start --server --startPath 'tests/site' --files 'tests/site/*.html, tests/site/*.css, tests/site/*.js'",
@@ -42,7 +40,6 @@
 	},
 	"dependencies": {
 		"@gov.au/pancake": "~1",
-
 		"@gov.au/testmodule1": "^15.0.0"
 	},
 	"peerDependencies": {

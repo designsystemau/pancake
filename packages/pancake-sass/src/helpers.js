@@ -10,19 +10,16 @@
 
 'use strict';
 
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Dependencies
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // const Path = require( 'path' );
 // const Fs = require( 'fs' );
 
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Included modules
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // import { Log, Style } = require( '@gold.au/pancake' );
-
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Default export
@@ -34,14 +31,15 @@
  *
  * @return {string}         - Removed duplicate lines
  */
-module.exports.StripDuplicateLines = content => {
+module.exports.StripDuplicateLines = (content) => {
 	let lines = content.split(`\n`); //split into each line
 
-	if( lines[ lines.length - 1 ] === '' ) { //remove empty line at the end
+	if (lines[lines.length - 1] === '') {
+		//remove empty line at the end
 		lines.pop();
 	}
 
-	let sortedLines = [ ...new Set( lines ) ]; //make each line unique
+	let sortedLines = [...new Set(lines)]; //make each line unique
 
 	return sortedLines.join(`\n`);
 };
